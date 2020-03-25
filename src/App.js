@@ -2,13 +2,16 @@ import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
+import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
+import Inicio from './components/pages/Inicio';
 import Nosotros from './components/pages/Nosotros'
 import NuestrosValores from './components/pages/NuestrosValores'
 import uuid from 'uuid';
 import axios from 'axios';
-import Footer from './components/layout/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 class App extends React.Component {
   state = {
@@ -33,7 +36,7 @@ class App extends React.Component {
           crossorigin="anonymous"
         />
           <Header/>
-          <Route exact path = "/" render = {props => (
+          <Route exact path = "/" component = {Inicio} render = {props => (
             <React.Fragment>
             </React.Fragment>
           )}/>
