@@ -1,21 +1,32 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
+import AGHeader from './components/layout/AG/AGHeader';
 import Inicio from './components/pages/Inicio';
-import Nosotros from './components/pages/Nosotros'
-import NuestrosValores from './components/pages/NuestrosValores'
+import Nosotros from './components/pages/Nosotros';
+import Avisos from './components/pages/Avisos';
+import SubirAviso from './components/pages/AG/SubirAviso';
+import Exodos from './components/pages/AG/Exodos'
+import CuentaAG from './components/pages/AG/CuentaAG';
+import NuestrosValores from './components/pages/NuestrosValores';
 import uuid from 'uuid';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+const accountType =
+{
+  EXODITO: 'Exodito',
+  EXODO: 'Exodo',
+  AG: 'AG'
+}
 
 class App extends React.Component {
   state = {
-    todos: []
+    todos: [],
+    currentAccount: accountType.AG
   }
 
   componentDidMount() {
@@ -24,7 +35,19 @@ class App extends React.Component {
     .then(res => this.setState({todos: res.data}))
   }
 
-  render() {
+  render()
+  {
+    switch(this.state.currentAccount)
+    {
+      case accountType.EXODITO: return this.renderExodito();
+      case accountType.EXODO: return this.renderExodo();
+      case accountType.AG: return this.renderAG();
+      default: return this.renderExodito();
+    }
+  } 
+
+  renderExodito()
+  {
     return (
       <Router>
       <div className="App">
@@ -42,6 +65,38 @@ class App extends React.Component {
           )}/>
           <Route path="/nosotros" component = {Nosotros}/>
           <Route path="/nuestros-valores" component = {NuestrosValores}/>
+          <Footer/>
+        </div>
+      </div>
+      </Router>
+    );
+  }
+
+  renderExodo()
+  {
+
+  }
+
+  renderAG()
+  {
+    return (
+      <Router>
+      <div className="App">
+        <div className="container">
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous"
+        />
+          <AGHeader/>
+          <Route exact path = "/" component = {Avisos} render = {props => (
+            <React.Fragment>
+            </React.Fragment>
+          )}/>
+          <Route path="/subir-aviso" component = {SubirAviso}/>
+          <Route path="/exodos" component = {Exodos}/>
+          <Route path="/cuenta-ag" component = {CuentaAG}/>
           <Footer/>
         </div>
       </div>
