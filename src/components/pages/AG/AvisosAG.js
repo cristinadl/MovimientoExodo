@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Avisos() {
+export default function AvisosAG() {
     return (
         <div>
-            Avisos
+            Avisos AG
         </div>
     )
 }

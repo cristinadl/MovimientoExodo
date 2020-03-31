@@ -7,7 +7,7 @@ import Header from './components/layout/Header';
 import AGHeader from './components/layout/AG/AGHeader';
 import Inicio from './components/pages/Inicio';
 import Nosotros from './components/pages/Nosotros';
-import Avisos from './components/pages/Avisos';
+import AvisosAG from './components/pages/AG/AvisosAG';
 import SubirAviso from './components/pages/AG/SubirAviso';
 import Exodos from './components/pages/AG/Exodos'
 import CuentaAG from './components/pages/AG/CuentaAG';
@@ -90,10 +90,7 @@ class App extends React.Component {
           crossorigin="anonymous"
         />
           <AGHeader/>
-          <Route exact path = "/" component = {Avisos} render = {props => (
-            <React.Fragment>
-            </React.Fragment>
-          )}/>
+          <Route exact path = "/" component = {AvisosAG} render/>
           <Route path="/subir-aviso" component = {SubirAviso}/>
           <Route path="/exodos" component = {Exodos}/>
           <Route path="/cuenta-ag" component = {CuentaAG}/>
