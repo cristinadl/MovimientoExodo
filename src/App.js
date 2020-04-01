@@ -44,7 +44,7 @@ class App extends React.Component {
       case accountType.AG: return this.renderAG();
       default: return this.renderExodito();
     }
-  } 
+  }
 
   renderExodito()
   {
@@ -83,12 +83,12 @@ class App extends React.Component {
       <Router>
       <div className="App">
         <div className="container">
-        <link
-          rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous"
-        />
+          <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous"
+          />
           <AGHeader/>
           <Route exact path = "/" component = {AvisosAG} render/>
           <Route path="/subir-aviso" component = {SubirAviso}/>
