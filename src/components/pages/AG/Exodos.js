@@ -23,9 +23,9 @@ class Exodo extends React.Component {
 
   render() {
     return (
-      <Col md={4} sm={12}>
+      <Col xl={3} lg={4} md={6} sm={12}>
         <Card className='my-2'>
-          <Card.Img style={{width: '10vw',height: '10vw', alignItems: 'center', justifyContent: 'center'}} variant="top" src={this.state.logo} alt='No carga porque ps no hay nada'/>
+          <Card.Img style={{width: "175px",height: '125px',display: "block",marginLeft: "auto",marginRight: "auto"}} variant="top" src={this.state.logo} alt='No carga porque ps no hay nada'/>
           <Card.Body>
             <Card.Title>{this.state.nombre}</Card.Title>
             <Card.Text><b>Lema: </b>{this.state.lema}</Card.Text>
