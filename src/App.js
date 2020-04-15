@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
@@ -12,7 +12,7 @@ import SubirAviso from './components/pages/AG/SubirAviso';
 import Exodos from './components/pages/AG/Exodos'
 import CuentaAG from './components/pages/AG/CuentaAG';
 import NuestrosValores from './components/pages/NuestrosValores';
-import uuid from 'uuid';
+// import uuid from 'uuid';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -81,27 +81,27 @@ class App extends React.Component {
   {
     return (
       <Router>
-      <div className="App">
+      <div className="App" style={{backgroundImage: `url(https://movimientoexodo.com/wp-content/uploads/2015/01/Untitled-4.jpg)`,backgroundRepeat: "no-repeat",backgroundAttachment: "fixed"}}>
+        <AGHeader/>
         <div className="container">
           <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           />
-          <AGHeader/>
-          <Route exact path = "/" component = {AvisosAG} render/>
+          <Route exact path = "/" component = {AvisosAG}/>
           <Route path="/subir-aviso" component = {SubirAviso}/>
           <Route path="/exodos" component = {Exodos}/>
           <Route path="/cuenta-ag" component = {CuentaAG}/>
-          <Footer/>
         </div>
+        <Footer/>
       </div>
       </Router>
     );
   }
 }
 
-const QuienesSomos = 'Movimiento Éxodo está sustentado por una espiritualidad cristiana con un fuerte y claro fundamento bíblico. Somos un movimiento eclesial católico a favor de los adolescentes que tiene como objetivo la promoción integral del adolescente sobre la base de 5 valores: RELIGIOSO, CULTURAL, FISICO, TÉCNICO, PSICO-SOCIAL.'
+// const QuienesSomos = 'Movimiento Éxodo está sustentado por una espiritualidad cristiana con un fuerte y claro fundamento bíblico. Somos un movimiento eclesial católico a favor de los adolescentes que tiene como objetivo la promoción integral del adolescente sobre la base de 5 valores: RELIGIOSO, CULTURAL, FISICO, TÉCNICO, PSICO-SOCIAL.'
 
 export default App;
