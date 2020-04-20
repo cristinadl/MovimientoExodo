@@ -3,6 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+
+var firebaseConfig = {
+  apiKey: "AIzaSyC-g6SCIemVM1bwO_tRqGBNnQKWszvXUWo",
+  authDomain: "dbmovimientoexodo.firebaseapp.com",
+  databaseURL: "https://dbmovimientoexodo.firebaseio.com",
+  projectId: "dbmovimientoexodo",
+  storageBucket: "dbmovimientoexodo.appspot.com",
+  messagingSenderId: "299145830200",
+  appId: "1:299145830200:web:712fa8936de201ff1d2bcd",
+  measurementId: "G-74LRPCPFTV"
+};
+
+firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
   <React.StrictMode>
