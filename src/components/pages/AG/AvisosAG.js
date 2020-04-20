@@ -5,8 +5,17 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
 
+var db;
+
 function Anuncio(anuncio){
   anuncio = anuncio.anuncio
+  let deletePost = (id) => {
+    db.collection('Avisos').doc(id).delete().then(() => {
+      console.log('El anuncio fue borrado');
+    }).catch((error) => {
+      console.log('Se genero un error al borrar');
+    });
+  }
   return (
     <Card className='mx-5 my-2'>
       <Row>
@@ -15,7 +24,7 @@ function Anuncio(anuncio){
         </Col>
         <Col mb={9} sm={8} xs={6}>
           <Card.Body>
-            <Image src="https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png" style={{width: "20px", heigh: "20px", float: "right"}}/>
+            <Image src="https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png" style={{width: "20px", heigh: "20px", float: "right"}} onClick={() => deletePost(anuncio.id)}/>
             <Card.Title style={{textAlign: 'left'}}>{anuncio.title}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted" style={{textAlign: 'left'}}>{anuncio.author}</Card.Subtitle>
             <Card.Text style={{textAlign: 'left'}}>{anuncio.content}</Card.Text>
@@ -37,13 +46,13 @@ export default class AvisosAG extends Component {
 
   componentDidMount() {
     var anuncios = this.state.anuncios
-    var db = firebase.firestore();
-    var aviso = db.collection('Avisos')
-      .get()
+    db = firebase.firestore();
+    db.collection('Avisos')
+      .get() // Metodo de Firebase para obtener los datos
       .then((Snap) => {
         Snap.forEach(function(aviso) {
-          //anuncios.push()
           anuncios.push({
+            id: aviso.ref.id,
             title: aviso.data().Titulo,
             author: 'Autor del aviso',
             content: aviso.data().Contenido,
