@@ -4,13 +4,29 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import * as firebase from 'firebase'
 
 export default function SubirAviso() {
+
+    var db = firebase.firestore();
+
+    let createPost = (event) => {
+        event.preventDefault();
+        db.collection('Avisos').add({
+            Titulo: 'Test',
+            Contenido: 'Test Content'
+        }).then(() => {
+            console.log('Success')
+        }).catch((error) => {
+            console.log('Error al crear Anuncio');
+        })
+    }
+
     return (
       <Card>
         <Card.Body>
             <Card.Title >Aviso</Card.Title>
-            <Form>
+            <Form onSubmit={createPost}>
                 <Form.Group as={Row} >
                     <Form.Label column sm="2">
                         Titulo
