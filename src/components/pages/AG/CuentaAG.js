@@ -1,9 +1,8 @@
 import React from 'react'
+import AccountContent from './../../AccountContent'
 
 export default function CuentaAG() {
     return (
-        <div>
-            Cuenta AG
-        </div>
+        <AccountContent></AccountContent>
     )
 }

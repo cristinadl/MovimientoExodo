@@ -8,7 +8,11 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+<<<<<<< HEAD
     "firebase": "^7.14.1",
+=======
+    "firebase": "^7.13.1",
+>>>>>>> ff88d7425e3b1496cc9e553c3e434f129011f593
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
