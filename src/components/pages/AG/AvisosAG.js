@@ -9,6 +9,14 @@ var db;
 
 function Anuncio(props){
   const anuncio = props.anuncio
+  const d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+  d.setUTCSeconds(anuncio.date);
+  const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
+  const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
+  const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+  const time = d.toLocaleTimeString();
+  const date = `${da}-${mo}-${ye} ${time}`
+  console.log(date)
   return (
     <Card className='mx-5 my-2'>
       <Row>
@@ -21,7 +29,7 @@ function Anuncio(props){
             <Card.Title style={{textAlign: 'left'}}>{anuncio.title}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted" style={{textAlign: 'left'}}>{anuncio.author}</Card.Subtitle>
             <Card.Text style={{textAlign: 'left'}}>{anuncio.content}</Card.Text>
-            <Card.Text style={{textAlign: 'right'}}>{anuncio.date}</Card.Text>
+            <Card.Text style={{textAlign: 'right'}}>{date}</Card.Text>
           </Card.Body>
         </Col>
       </Row>
@@ -64,7 +72,7 @@ export default class AvisosAG extends Component {
             title: aviso.data().Titulo,
             author: 'Autor del aviso',
             content: aviso.data().Contenido,
-            date: 'Fecha del aviso',
+            date: aviso.data().date,
             imagen: image_url
           });
         });

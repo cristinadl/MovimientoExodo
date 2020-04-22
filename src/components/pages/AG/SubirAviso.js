@@ -21,9 +21,12 @@ export default class SubirAviso extends React.Component {
 
   createPost(event) {
       event.preventDefault();
+      const now = new Date()
+      const secondsSinceEpoch = Math.round(now.getTime() / 1000)
       this.db.collection('Avisos').add({
           Titulo: this.state.title,
-          Contenido: this.state.content
+          Contenido: this.state.content,
+          date: secondsSinceEpoch
       }).then(() => {
           console.log('Success'); // Cambiar por feedback al usuario
       }).catch((error) => {
