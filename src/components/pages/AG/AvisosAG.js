@@ -25,7 +25,7 @@ function Anuncio(props){
         </Col>
         <Col mb={9} sm={8} xs={6}>
           <Card.Body>
-            <Image className='basura' src="https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png" onClick={props.onClick}/>
+            <Image className='icono' src="https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png" onClick={props.onClick}/>
             <Card.Title style={{textAlign: 'left'}}>{anuncio.title}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted" style={{textAlign: 'left'}}>{anuncio.author}</Card.Subtitle>
             <Card.Text style={{textAlign: 'left'}}>{anuncio.content}</Card.Text>
