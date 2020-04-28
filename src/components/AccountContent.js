@@ -55,7 +55,7 @@ export class AccountContent extends Component {
     componentDidMount()
     {
         db = firebase.firestore();
-        this.signIn('email@email.com', 'newPassword');
+        this.signIn('agregional@gmail.com', '123456');
 
         this.render();
     //     var username;
@@ -114,8 +114,8 @@ export class AccountContent extends Component {
       .get() // Metodo de Firebase para obtener los datos
       .then((Snap) => {
         Snap.forEach(function(user) {
-            username = user.data().email
-            console.log(user.data().email);
+            username = user.data().nombre
+            console.log(user.data().nombre);
           });
           this.setState({username: username})
         });
