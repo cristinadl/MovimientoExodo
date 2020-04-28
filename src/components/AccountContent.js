@@ -8,6 +8,7 @@ import * as firebase from 'firebase'
 
 var db;
 var credential;
+var newPassword = "";
 
 export class AccountContent extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export class AccountContent extends Component {
                     {/* <Card.Text column sm = "10" style={{textAlign: 'left'}}>
                         <p>Usuario: {this.state.username}</p>
                     </Card.Text> */}
-                <Form onSubmit={this.createPost}>
+                <Form onSubmit={this.changePassword}>
                     <Form.Group as={Row}>
                         <Form.Label column sm="2">
                             Usuario: {this.state.username}
@@ -47,7 +48,7 @@ export class AccountContent extends Component {
                             <Form.Control name="newPassword" type="password" onChange={this.handleInput}/>
                         </Col>
                     </Form.Group>
-                    <Button variant="dark" type="submit">
+                    <Button variant="dark" type="submit" on>
                         Cambiar Contraseña
                     </Button>
                 </Form>
@@ -83,15 +84,17 @@ export class AccountContent extends Component {
         const value = target.value;
         const name = target.name;
 
-        this.setState({[name]: value});
+        //this.setState({[name]: value});
+        newPassword = value;
     }
 
     changePassword(event)
     {
         event.preventDefault();
-        credential.user.updatePassword(this.state.newPassword).then(function() {
+        //console.log(this.state.newPassword)
+        credential.user.updatePassword(newPassword).then(function() {
             console.log("new");
-            this.setState({newPassword: ""});
+            //this.setState({newPassword: ""});
           }).catch(function(error) {
             console.log(error);
           });

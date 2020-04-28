@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function AvisosExodo() {
+export default function DatosDelExodo() {
     return (
         <div>
-            Avisos Exodo
+            Datos del Exodo
         </div>
     )
 }

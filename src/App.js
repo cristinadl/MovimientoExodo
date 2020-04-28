@@ -5,6 +5,7 @@ import './App.css';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
 import AGHeader from './components/layout/AG/AGHeader';
+import ExodoHeader from './components/layout/Exodo/ExodoHeader'
 import Inicio from './components/pages/Inicio';
 import Nosotros from './components/pages/Nosotros';
 import AvisosAG from './components/pages/AG/AvisosAG';
@@ -12,6 +13,9 @@ import SubirAviso from './components/pages/AG/SubirAviso';
 import Exodos from './components/pages/AG/Exodos'
 import CuentaAG from './components/pages/AG/CuentaAG';
 import NuestrosValores from './components/pages/NuestrosValores';
+import AvisosExodo from './components/pages/Exodo/AvisosExodo'
+import DatosDelExodo from './components/pages/Exodo/DatosDelExodo'
+import CuentaExodo from './components/pages/Exodo/CuentaExodo'
 // import uuid from 'uuid';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,7 +30,7 @@ const accountType =
 class App extends React.Component {
   state = {
     todos: [],
-    currentAccount: accountType.AG
+    currentAccount: accountType.EXODO
   }
 
   componentDidMount() {
@@ -74,7 +78,25 @@ class App extends React.Component {
 
   renderExodo()
   {
-
+    return (
+      <Router>
+      <div className="App" style={{backgroundImage: `url(https://movimientoexodo.com/wp-content/uploads/2015/01/Untitled-4.jpg)`,backgroundRepeat: "no-repeat",backgroundAttachment: "fixed"}}>
+        <ExodoHeader/>
+        <div className="container">
+          <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossOrigin="anonymous"
+          />
+          <Route exact path = "/" component = {AvisosExodo}/>
+          <Route path="/datos-del-exodo" component = {DatosDelExodo}/>
+          <Route path="/cuenta-exodo" component = {CuentaExodo}/>
+        </div>
+        <Footer/>
+      </div>
+      </Router>
+    );
   }
 
   renderAG()
