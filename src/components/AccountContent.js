@@ -10,11 +10,15 @@ var db;
 var credential;
 
 export class AccountContent extends Component {
-
-    state = {
+  constructor(props) {
+    super(props);
+    this.state = {
         username: "Foo",
         newPassword: ""
     }
+    this.handleInput = this.handleInput.bind(this);
+  }
+
 
     render(){
         return (
@@ -37,10 +41,10 @@ export class AccountContent extends Component {
                     </Form.Group>
                     <Form.Group as={Row}>
                         <Form.Label column sm="2">
-                            Contraseña: 
+                            Contraseña:
                         </Form.Label>
                         <Col sm="10">
-                            <Form.Control name="newPassword" onChange={this.handleInput}/>
+                            <Form.Control name="newPassword" type="password" onChange={this.handleInput}/>
                         </Col>
                     </Form.Group>
                     <Button variant="dark" type="submit">
@@ -70,7 +74,7 @@ export class AccountContent extends Component {
     //       });
     //       this.setState({username: username})
     //     });
-        
+
     }
 
     handleInput(event)

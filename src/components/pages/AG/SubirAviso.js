@@ -4,7 +4,10 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import Alert from 'react-bootstrap/Alert'
 import * as firebase from 'firebase'
+import './AG.css';
+
 
 export default class SubirAviso extends React.Component {
   constructor(props) {
@@ -12,7 +15,9 @@ export default class SubirAviso extends React.Component {
     this.db = firebase.firestore();
     this.state = {
       title: '',
-      content: ''
+      content: '',
+      loading: false,
+      complete: false
     }
     this.createPost = this.createPost.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -21,6 +26,7 @@ export default class SubirAviso extends React.Component {
 
   createPost(event) {
       event.preventDefault();
+      this.setState({loading: true, complete: false})
       const now = new Date()
       const secondsSinceEpoch = Math.round(now.getTime() / 1000)
       this.db.collection('Avisos').add({
@@ -29,6 +35,7 @@ export default class SubirAviso extends React.Component {
           date: secondsSinceEpoch
       }).then(() => {
           console.log('Success'); // Cambiar por feedback al usuario
+          this.setState({loading: false, complete: true})
       }).catch((error) => {
           console.log('Error al crear Anuncio'); // Cambiar por feedback al usuario
       })
@@ -71,6 +78,8 @@ export default class SubirAviso extends React.Component {
                 <Button variant="dark" type="submit">
                     Publicar
                 </Button>
+                { this.state.loading && <div className='loader center'/>}
+                { this.state.complete && <Alert variant='success' className='center'>El anuncio ha sido publicado</Alert>}
             </Form>
         </Card.Body>
     </Card>

@@ -4,6 +4,7 @@ import Image from 'react-bootstrap/Image'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
+import './AG.css';
 
 var db;
 
@@ -12,20 +13,19 @@ function Anuncio(props){
   const d = new Date(0); // The 0 there is the key, which sets the date to the epoch
   d.setUTCSeconds(anuncio.date);
   const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
-  const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
+  const mo = new Intl.DateTimeFormat('es', { month: 'long' }).format(d)
   const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
-  const time = d.toLocaleTimeString();
-  const date = `${da}-${mo}-${ye} ${time}`
-  console.log(date)
+  const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const date = `${da} de ${mo} de ${ye} a las ${time}`
   return (
     <Card className='mx-5 my-2'>
       <Row>
         <Col mb={3} sm={4} xs={6}>
-          <Image style={{position: 'absolute', left: '50%', top: '50%', transform: 'translate(-35%, -50%)'}} fluid src={anuncio.imagen}/>
+          <Image style={{maxHeight: "100%"}} fluid src={anuncio.imagen}/>
         </Col>
         <Col mb={9} sm={8} xs={6}>
           <Card.Body>
-            <Image src="https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png" style={{max_height: "100%", width: "20px", height: "20px", float: "right"}} onClick={props.onClick}/>
+            <Image className='icono' src="https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png" onClick={props.onClick}/>
             <Card.Title style={{textAlign: 'left'}}>{anuncio.title}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted" style={{textAlign: 'left'}}>{anuncio.author}</Card.Subtitle>
             <Card.Text style={{textAlign: 'left'}}>{anuncio.content}</Card.Text>
@@ -42,21 +42,25 @@ export default class AvisosAG extends Component {
     super(props);
     this.state = {
       anuncios: [],
+      loading: true
     };
+    this.anuncios = React.createRef();
   }
 
   deletePost(anuncio) {
     const id = anuncio.id
-    db.collection('Avisos').doc(id).delete().then(() => {
-      console.log('El anuncio fue borrado');
+    if (window.confirm("¿Desea borrar el anuncio " + anuncio.title + "?")) {
       var anuncios = [...this.state.anuncios];
       var index = anuncios.indexOf(anuncio)
-      console.log(index)
-      anuncios.splice(index, 1);
-      this.setState({anuncios: anuncios})
-    }).catch((error) => {
-      console.log('Se genero un error al borrar');
-    });
+      this.anuncios.current.childNodes[index].setAttribute('style', 'filter: brightness(150%)')
+      db.collection('Avisos').doc(id).delete().then(() => {
+        console.log('El anuncio fue borrado');
+        anuncios.splice(index, 1);
+        this.setState({anuncios: anuncios})
+      }).catch((error) => {
+        console.log('Se genero un error al borrar');
+      });
+    }
   }
 
   componentDidMount() {
@@ -76,7 +80,14 @@ export default class AvisosAG extends Component {
             imagen: image_url
           });
         });
-        this.setState({anuncios: anuncios})
+        anuncios.sort(function(a, b) {
+          if (a.date > b.date){
+            return -1;
+          } else {
+            return 0
+          }
+        })
+        this.setState({anuncios: anuncios, loading: false});
       });
     /*for(let i = 0; i < 10; i++){
       anuncios.push({
@@ -92,8 +103,9 @@ export default class AvisosAG extends Component {
 
   render(){
     return (
-      <div className='anuncios'>
-        { this.state.anuncios.map((anuncio, index) => (<Anuncio anuncio={anuncio} key={anuncio.id} onClick={() => this.deletePost(anuncio)}></Anuncio>))}
+      <div className='anuncios' ref={this.anuncios}>
+        {this.state.loading ? <div className='loader center'/> : this.state.anuncios.map((anuncio, index) => (<Anuncio className='anuncio' anuncio={anuncio} key={anuncio.id} onClick={() => this.deletePost(anuncio)}></Anuncio>))}
+
       </div>
     )
   }
