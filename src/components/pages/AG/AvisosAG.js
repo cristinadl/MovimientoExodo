@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Card from 'react-bootstrap/Card'
 import Image from 'react-bootstrap/Image'
 import Col from 'react-bootstrap/Col'
@@ -7,21 +7,21 @@ import * as firebase from 'firebase'
 
 var db;
 
-function Anuncio(props){
+function Anuncio(props) {
   const anuncio = props.anuncio
   return (
     <Card className='mx-5 my-2'>
       <Row>
         <Col mb={3} sm={4} xs={6}>
-          <Image style={{position: 'absolute', left: '50%', top: '50%', transform: 'translate(-35%, -50%)'}} fluid src={anuncio.imagen}/>
+          <Image style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-35%, -50%)' }} fluid src={anuncio.imagen} />
         </Col>
         <Col mb={9} sm={8} xs={6}>
           <Card.Body>
-            <Image src="https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png" style={{max_height: "100%", width: "20px", height: "20px", float: "right"}} onClick={props.onClick}/>
-            <Card.Title style={{textAlign: 'left'}}>{anuncio.title}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted" style={{textAlign: 'left'}}>{anuncio.author}</Card.Subtitle>
-            <Card.Text style={{textAlign: 'left'}}>{anuncio.content}</Card.Text>
-            <Card.Text style={{textAlign: 'right'}}>{anuncio.date}</Card.Text>
+            <Image src="https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png" style={{ max_height: "100%", width: "20px", height: "20px", float: "right" }} onClick={props.onClick} />
+            <Card.Title style={{ textAlign: 'left' }}>{anuncio.title}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted" style={{ textAlign: 'left' }}>{anuncio.author}</Card.Subtitle>
+            <Card.Text style={{ textAlign: 'left' }}>{anuncio.content}</Card.Text>
+            <Card.Text style={{ textAlign: 'right' }}>{anuncio.date}</Card.Text>
           </Card.Body>
         </Col>
       </Row>
@@ -45,7 +45,7 @@ export default class AvisosAG extends Component {
       var index = anuncios.indexOf(anuncio)
       console.log(index)
       anuncios.splice(index, 1);
-      this.setState({anuncios: anuncios})
+      this.setState({ anuncios: anuncios })
     }).catch((error) => {
       console.log('Se genero un error al borrar');
     });
@@ -58,7 +58,7 @@ export default class AvisosAG extends Component {
     db.collection('Avisos')
       .get() // Metodo de Firebase para obtener los datos
       .then((Snap) => {
-        Snap.forEach(function(aviso) {
+        Snap.forEach(function (aviso) {
           anuncios.push({
             id: aviso.ref.id,
             title: aviso.data().Titulo,
@@ -68,7 +68,7 @@ export default class AvisosAG extends Component {
             imagen: image_url
           });
         });
-        this.setState({anuncios: anuncios})
+        this.setState({ anuncios: anuncios })
       });
     /*for(let i = 0; i < 10; i++){
       anuncios.push({
@@ -82,10 +82,10 @@ export default class AvisosAG extends Component {
     }*/
   }
 
-  render(){
+  render() {
     return (
       <div className='anuncios'>
-        { this.state.anuncios.map((anuncio, index) => (<Anuncio anuncio={anuncio} key={anuncio.id} onClick={() => this.deletePost(anuncio)}></Anuncio>))}
+        {this.state.anuncios.map((anuncio, index) => (<Anuncio anuncio={anuncio} key={anuncio.id} onClick={() => this.deletePost(anuncio)}></Anuncio>))}
       </div>
     )
   }
