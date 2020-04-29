@@ -32,7 +32,7 @@ const accountType =
 class App extends React.Component {
   state = {
     todos: [],
-    currentAccount: accountType.AG
+    currentAccount: accountType.EXODO
   }
 
   componentDidMount() {

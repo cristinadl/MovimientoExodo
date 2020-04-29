@@ -60,7 +60,7 @@ export class AccountContent extends Component {
     componentDidMount()
     {
         db = firebase.firestore();
-        this.signIn('almelek@gmail.com', '123456');
+        this.signIn('agregional@gmail.com', '1234567');
 
         this.render();
     //     var username;

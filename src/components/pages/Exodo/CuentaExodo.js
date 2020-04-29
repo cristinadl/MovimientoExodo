@@ -93,7 +93,7 @@ export default class CuentaExodo extends Component {
     componentDidMount()
     {
         db = firebase.firestore();
-        this.signIn('almelek@gmail.com', '123456');
+        this.signIn('agregional@gmail.com', '1234567');
     }
 
     signIn(email, password)  {
