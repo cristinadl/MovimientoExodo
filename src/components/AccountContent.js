@@ -8,7 +8,6 @@ import * as firebase from 'firebase'
 
 var db;
 var credential;
-var newPassword = "";
 
 export class AccountContent extends Component {
   constructor(props) {
@@ -18,6 +17,7 @@ export class AccountContent extends Component {
         newPassword: ""
     }
     this.handleInput = this.handleInput.bind(this);
+    this.changePassword = this.changePassword.bind(this);
   }
 
 
@@ -60,7 +60,7 @@ export class AccountContent extends Component {
     componentDidMount()
     {
         db = firebase.firestore();
-        this.signIn('agregional@gmail.com', '123456');
+        this.signIn('almelek@gmail.com', '123456');
 
         this.render();
     //     var username;
@@ -84,17 +84,16 @@ export class AccountContent extends Component {
         const value = target.value;
         const name = target.name;
 
-        //this.setState({[name]: value});
-        newPassword = value;
+        this.setState({[name]: value});
     }
 
     changePassword(event)
     {
         event.preventDefault();
-        //console.log(this.state.newPassword)
-        credential.user.updatePassword(newPassword).then(function() {
+        console.log(this.state.newPassword)
+        credential.user.updatePassword(this.state.newPassword).then(function() {
             console.log("new");
-            //this.setState({newPassword: ""});
+            this.setState({newPassword: ""});
           }).catch(function(error) {
             console.log(error);
           });
