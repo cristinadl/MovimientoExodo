@@ -20,7 +20,6 @@ export default function AGHeader() {
                         <Nav.Link href="/">Avisos</Nav.Link>
                         <Nav.Link href="/subir-aviso">Subir Aviso</Nav.Link>
                         <Nav.Link href="/exodos">Éxodos</Nav.Link>
-
                     </Nav>
                     <Nav>
                         <Nav.Link href="/cuenta-ag">Cuenta</Nav.Link>

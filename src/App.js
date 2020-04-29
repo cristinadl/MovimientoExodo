@@ -11,6 +11,8 @@ import Nosotros from './components/pages/Nosotros';
 import AvisosAG from './components/pages/AG/AvisosAG';
 import SubirAviso from './components/pages/AG/SubirAviso';
 import Exodos from './components/pages/AG/Exodos'
+import CrearExodo from './components/pages/AG/CrearExodo';
+import DetalleExodo from './components/pages/AG/DetalleExodo';
 import CuentaAG from './components/pages/AG/CuentaAG';
 import NuestrosValores from './components/pages/NuestrosValores';
 import AvisosExodo from './components/pages/Exodo/AvisosExodo'
@@ -30,7 +32,7 @@ const accountType =
 class App extends React.Component {
   state = {
     todos: [],
-    currentAccount: accountType.EXODO
+    currentAccount: accountType.AG
   }
 
   componentDidMount() {
@@ -112,10 +114,12 @@ class App extends React.Component {
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
             crossOrigin="anonymous"
           />
-          <Route exact path = "/" component = {AvisosAG}/>
-          <Route path="/subir-aviso" component = {SubirAviso}/>
-          <Route path="/exodos" component = {Exodos}/>
-          <Route path="/cuenta-ag" component = {CuentaAG}/>
+          <Route exact path = "/" component={AvisosAG}/>
+          <Route path="/subir-aviso" component={SubirAviso}/>
+          <Route path="/exodos" component={Exodos}/>
+          <Route path="/detalle-exodo/:id_exodo" component={DetalleExodo}/>
+          <Route path="/crear-exodo" component={CrearExodo}/>
+          <Route path="/cuenta-ag" component={CuentaAG}/>
         </div>
         <Footer/>
       </div>

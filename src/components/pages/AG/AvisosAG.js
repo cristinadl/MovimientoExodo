@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Card from 'react-bootstrap/Card'
 import Image from 'react-bootstrap/Image'
 import Col from 'react-bootstrap/Col'
@@ -8,7 +8,7 @@ import './AG.css';
 
 var db;
 
-function Anuncio(props){
+function Anuncio(props) {
   const anuncio = props.anuncio
   const d = new Date(0); // The 0 there is the key, which sets the date to the epoch
   d.setUTCSeconds(anuncio.date);
@@ -70,7 +70,7 @@ export default class AvisosAG extends Component {
     db.collection('Avisos')
       .get() // Metodo de Firebase para obtener los datos
       .then((Snap) => {
-        Snap.forEach(function(aviso) {
+        Snap.forEach(function (aviso) {
           anuncios.push({
             id: aviso.ref.id,
             title: aviso.data().Titulo,
@@ -101,7 +101,7 @@ export default class AvisosAG extends Component {
     }*/
   }
 
-  render(){
+  render() {
     return (
       <div className='anuncios' ref={this.anuncios}>
         {this.state.loading ? <div className='loader center'/> : this.state.anuncios.map((anuncio, index) => (<Anuncio className='anuncio' anuncio={anuncio} key={anuncio.id} onClick={() => this.deletePost(anuncio)}></Anuncio>))}
