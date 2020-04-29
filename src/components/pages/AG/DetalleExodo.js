@@ -28,6 +28,8 @@ export default class DetalleExodo extends Component {
       complete: false
     };
     this.handleInput = this.handleInput.bind(this);
+    this.updateExodo = this.updateExodo.bind(this);
+    this.deleteExodo = this.deleteExodo.bind(this);
   }
 
   handleInput(event) {
@@ -66,8 +68,9 @@ export default class DetalleExodo extends Component {
 
   updateExodo(event) {
       event.preventDefault();
+      console.log(this.state.pais)
       this.setState({uploading: true, complete: false})
-      this.db.collection('Usuarios').doc(this.state.id).set({
+      db.collection('Usuarios').doc(this.state.id).set({
           nombre: this.state.nombre,
           email: this.state.email,
           lema: this.state.lema,
@@ -112,7 +115,7 @@ export default class DetalleExodo extends Component {
             <Card>
               <Card.Body>
                 <Card.Title >{ this.state.initial_name }</Card.Title>
-                <Form onSubmit={this.createExodo}>
+                <Form onSubmit={this.updateExodo}>
                   <Form.Group as={Row} >
                     <Form.Label column sm="2">
                       Nombre
@@ -150,7 +153,7 @@ export default class DetalleExodo extends Component {
                         País
                       </Form.Label>
                       <Col sm="10">
-                        <Form.Control as="select" custom>
+                        <Form.Control name='pais' as="select" value={this.state.pais} custom onChange={this.handleInput}>
                           <option selected>México</option>
                           <option>España</option>
                         </Form.Control>
