@@ -19,15 +19,15 @@ export default class DetalleExodo extends Component {
       id: '',
       email: '',
       nombre: '',
-      lema: '',
-      porra: '',
-      pais: '',
       tipoExodo: true,
+      contraseña: 'xd',
       loading: true,
       uploading: false,
       complete: false
     };
     this.handleInput = this.handleInput.bind(this);
+    this.updateExodo = this.updateExodo.bind(this);
+    this.deleteExodo = this.deleteExodo.bind(this);
   }
 
   handleInput(event) {
@@ -66,13 +66,12 @@ export default class DetalleExodo extends Component {
 
   updateExodo(event) {
       event.preventDefault();
+      console.log(this.state.pais)
       this.setState({uploading: true, complete: false})
-      this.db.collection('Usuarios').doc(this.state.id).set({
+      db.collection('Usuarios').doc(this.state.id).set({
           nombre: this.state.nombre,
           email: this.state.email,
-          lema: this.state.lema,
-          porra: this.state.porra,
-          pais: this.state.pais,
+          contraseña: this.state.contraseña,
           tipoExodo: this.state.tipoExodo
       }).then(() => {
           console.log('Success'); // Cambiar por feedback al usuario
@@ -96,9 +95,7 @@ export default class DetalleExodo extends Component {
         initial_name: result.data().nombre,
         email: result.data().email,
         nombre: result.data().nombre,
-        lema: result.data().lema,
-        porra: result.data().porra,
-        pais: result.data().pais,
+        contraseña: result.data().contraseña,
         tipoExodo: result.data().tipoExodo,
         loading: false
         });
@@ -112,7 +109,7 @@ export default class DetalleExodo extends Component {
             <Card>
               <Card.Body>
                 <Card.Title >{ this.state.initial_name }</Card.Title>
-                <Form onSubmit={this.createExodo}>
+                <Form onSubmit={this.updateExodo}>
                   <Form.Group as={Row} >
                     <Form.Label column sm="2">
                       Nombre
@@ -131,31 +128,12 @@ export default class DetalleExodo extends Component {
                   </Form.Group>
                   <Form.Group as={Row} >
                     <Form.Label column sm="2">
-                      Lema
+                      Contraseña
                     </Form.Label>
                     <Col sm="10">
-                      <Form.Control name="lema" value={this.state.lema} onChange={this.handleInput} />
+                      <Form.Control type="password" name="contraseña" value={this.state.contraseña} onChange={this.handleInput} />
                     </Col>
                   </Form.Group>
-                    <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
-                        <Form.Label column sm="2">
-                            Porra
-                        </Form.Label>
-                        <Col sm="10">
-                            <Form.Control name="porra" as="textarea" rows="4" value={this.state.porra} onChange={this.handleInput} />
-                        </Col>
-                    </Form.Group>
-                    <Form.Group>
-                      <Form.Label column sm="2">
-                        País
-                      </Form.Label>
-                      <Col sm="10">
-                        <Form.Control as="select" custom>
-                          <option selected>México</option>
-                          <option>España</option>
-                        </Form.Control>
-                      </Col>
-                    </Form.Group>
                     <Form.Group controlId="formBasicCheckbox">
                       <Form.Check defaultChecked={this.state.tipoExodo} name="tipoExodo" type="checkbox" label="Tipo Exodo" onChange={this.toggleChange}/>
                     </Form.Group>

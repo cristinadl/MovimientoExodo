@@ -17,9 +17,7 @@ export default class CrearExodo extends React.Component {
     this.state = {
       email: '',
       nombre: '',
-      lema: '',
-      porra: '',
-      pais: 'México',
+      contraseña: '',
       tipoExodo: true,
       loading: false,
       complete: false
@@ -35,9 +33,7 @@ export default class CrearExodo extends React.Component {
       this.db.collection('Usuarios').add({
           nombre: this.state.nombre,
           email: this.state.email,
-          lema: this.state.lema,
-          porra: this.state.porra,
-          pais: this.state.pais,
+          contraseña: this.state.contraseña,
           tipoExodo: this.state.tipoExodo
       }).then(() => {
           console.log('Success'); // Cambiar por feedback al usuario
@@ -83,31 +79,12 @@ export default class CrearExodo extends React.Component {
               </Form.Group>
               <Form.Group as={Row} >
                 <Form.Label column sm="2">
-                  Lema
+                  Contraseña
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control name="lema" value={this.state.lema} onChange={this.handleInput} />
+                  <Form.Control type="password" name="contraseña" value={this.state.contraseña} onChange={this.handleInput} />
                 </Col>
               </Form.Group>
-                <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
-                    <Form.Label column sm="2">
-                        Porra
-                    </Form.Label>
-                    <Col sm="10">
-                        <Form.Control name="porra" as="textarea" rows="4" value={this.state.porra} onChange={this.handleInput} />
-                    </Col>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label column sm="2">
-                    País
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control as="select" value={this.state.pais} custom>
-                      <option>México</option>
-                      <option>España</option>
-                    </Form.Control>
-                  </Col>
-                </Form.Group>
                 <Form.Group controlId="formBasicCheckbox">
                   <Form.Check defaultChecked name="tipoExodo" type="checkbox" label="Tipo Exodo" onChange={this.handleInput}/>
                 </Form.Group>
