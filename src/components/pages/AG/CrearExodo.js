@@ -46,7 +46,7 @@ export default class CrearExodo extends React.Component {
     }
     this.createExodo = this.createExodo.bind(this);
     this.handleInput = this.handleInput.bind(this);
-
+    this.handleChecked = this.handleChecked.bind(this);
   }
 
   createExodo(event) {
@@ -72,7 +72,7 @@ export default class CrearExodo extends React.Component {
       //if(newUser.password != newUser.confirmPassword) errors.password = 'No coincide'
       if(isEmpty(newUser.handle)) errors.handle = 'campo obligatorio'
 
-      if(Object.keys(errors).length > 0) return 
+      if(Object.keys(errors).length > 0) return
 
       //TODO: Validar data
       let token, userId, userCredentials;
@@ -156,7 +156,7 @@ export default class CrearExodo extends React.Component {
                 console.log({ email: "El email ya existe"});
             } else {
               console.log({ error: err.code});
-            }  
+            }
             event.preventDefault();
         })
   }
@@ -169,6 +169,11 @@ export default class CrearExodo extends React.Component {
     this.setState({
       [name]: value
     });
+  }
+
+  handleChecked () {
+    this.setState({tipoExodo: !this.state.tipoExodo});
+    console.log(this.state.tipoExodo)
   }
 
   render() {
@@ -203,7 +208,7 @@ export default class CrearExodo extends React.Component {
                 </Col>
               </Form.Group>
                 <Form.Group controlId="formBasicCheckbox">
-                  <Form.Check defaultChecked name="tipoExodo" type="checkbox" label="Tipo Exodo" onChange={this.handleInput}/>
+                  <Form.Check defaultChecked name="tipoExodo" type="checkbox" label="Tipo Exodo" onChange={this.handleChecked}/>
                 </Form.Group>
                 <Button variant="dark" type="submit">
                     Publicar
