@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
+import {Link} from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 
 export default function AGHeader() {
@@ -17,9 +17,9 @@ export default function AGHeader() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/">Avisos</Nav.Link>
-                        <Nav.Link href="/subir-aviso">Subir Aviso</Nav.Link>
-                        <Nav.Link href="/exodos">Éxodos</Nav.Link>
+                        <Nav.Link as={Link} to="/">Avisos</Nav.Link>
+                        <Nav.Link as={Link} to="/subir-aviso">Subir Aviso</Nav.Link>
+                        <Nav.Link as={Link} to="/exodos">Éxodos</Nav.Link>
                     </Nav>
                     <Nav>
                         <Nav.Link href="/cuenta-ag">Cuenta</Nav.Link>
@@ -35,9 +35,4 @@ const headerStyle = {
     color: '#fff',
     textAlign: 'center',
     padding: '10px'
-}
-
-const linkStyle = {
-    color: '#fff',
-    textDecoration: 'none'
 }

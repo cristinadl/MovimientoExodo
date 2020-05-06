@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row'
 import Alert from 'react-bootstrap/Alert'
 import { Container } from 'reactstrap'
 import * as firebase from 'firebase'
-import './AG.css';
+import '../loader.css';
 
 
 export default class CrearExodo extends React.Component {
