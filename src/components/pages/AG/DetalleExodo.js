@@ -18,7 +18,7 @@ export default class DetalleExodo extends Component {
       email: '',
       nombre: '',
       tipoExodo: true,
-      contraseña: 'xd',
+      contrasena: '',
       loading: true,
       uploading: false,
       complete: false
@@ -64,14 +64,23 @@ export default class DetalleExodo extends Component {
 
   updateExodo(event) {
       event.preventDefault();
-      console.log(this.state.pais)
       this.setState({uploading: true, complete: false})
-      db.collection('Usuarios').doc(this.state.id).set({
-          nombre: this.state.nombre,
-          email: this.state.email,
-          contraseña: this.state.contraseña,
-          tipoExodo: this.state.tipoExodo
-      }).then(() => {
+      var data;
+      if(this.state.contrasena.length > 6){
+        data = {
+            nombre: this.state.nombre,
+            email: this.state.email,
+            // contrasena: this.state.contrasena, TODO: postear contraseña
+            tipoExodo: this.state.tipoExodo
+        }
+      } else {
+        data = {
+            nombre: this.state.nombre,
+            email: this.state.email,
+            tipoExodo: this.state.tipoExodo
+        }
+      }
+      db.collection('Usuarios').doc(this.state.id).update(data).then(() => {
           console.log('Success'); // Cambiar por feedback al usuario
           this.setState({uploading: false, complete: true})
       }).catch((error) => {
@@ -128,7 +137,7 @@ export default class DetalleExodo extends Component {
                       Contraseña
                     </Form.Label>
                     <Col sm="10">
-                      <Form.Control type="password" name="contraseña" value={this.state.contraseña} onChange={this.handleInput} />
+                      <Form.Control type="password" name="contrasena" value={this.state.contrasena} onChange={this.handleInput} />
                     </Col>
                   </Form.Group>
                     <Form.Group controlId="formBasicCheckbox">
