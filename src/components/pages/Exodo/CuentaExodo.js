@@ -18,12 +18,27 @@ export default class CuentaExodo extends Component {
             userHasProfilePic: false,
             profilePic: "",
             invalidFile: true,
-            loadedFile: null
+            loadedFile: null,
+            email: props.email
         }
         this.verifyFile = this.verifyFile.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.toBase64 = this.toBase64.bind(this);
       }
+
+    loadData(){
+      db = firebase.firestore();
+        db.collection('Usuarios')
+        .where('email', '==', this.state.email)
+        .get()
+        .then((result) => {
+          this.setState({
+          email: result.data().email,
+          nombre: result.data().nombre,
+          tipoExodo: result.data().tipoExodo,
+          });
+      });
+    }
 
     render() {
         return (
@@ -36,7 +51,7 @@ export default class CuentaExodo extends Component {
                     }
                 </Card>
                 </Col>
-                
+
                 <Col md={6}>
                 <Card>
                     <Card.Body>
@@ -48,7 +63,7 @@ export default class CuentaExodo extends Component {
                                 {/* <Form.Label column sm="6">
                                     Sube tu foto de perfil.
                                 </Form.Label> */}
-                                <input type="file" class="form-control" accept = ".png, .jpg" 
+                                <input type="file" class="form-control" accept = ".png, .jpg"
                                     multiple="" onChange = {this.verifyFile}></input>
                             </Form.Group>
                             <Button variant="dark" type="submit" disabled={this.state.invalidFile}>
@@ -62,7 +77,7 @@ export default class CuentaExodo extends Component {
                             <form method="post" action="#" id="#">
                                 <div class="form-group files">
                                     <label>Sube tu foto de perfil</label>
-                                    <input type="file" class="form-control" accept = ".png, .jpeg" 
+                                    <input type="file" class="form-control" accept = ".png, .jpeg"
                                     multiple="" onChange = {this.verifyFile}></input>
                                     <button type="submit">Subir</button>
                                 </div>
@@ -83,9 +98,9 @@ export default class CuentaExodo extends Component {
                 </Card>
                 </Col>
 
-                
 
-                <AccountContent></AccountContent>
+
+                <AccountContent username={this.state.email}></AccountContent>
             </div>
         )
     }
@@ -125,7 +140,7 @@ export default class CuentaExodo extends Component {
                 imageJSX = <img src={image} alt = "Profile"/>
                 this.setState({profilePic: image, userHasProfilePic: true})
             }
-          
+
         });
     }
 
