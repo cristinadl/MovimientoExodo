@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 // import logo from './logo.svg';
 import './App.css';
 import Footer from './components/layout/Footer';
@@ -8,6 +8,7 @@ import AGHeader from './components/layout/AG/AGHeader';
 import ExodoHeader from './components/layout/Exodo/ExodoHeader'
 import Inicio from './components/pages/Inicio';
 import Nosotros from './components/pages/Nosotros';
+import Login from './components/pages/Login';
 import AvisosAG from './components/pages/AG/AvisosAG';
 import SubirAviso from './components/pages/AG/SubirAviso';
 import Exodos from './components/pages/AG/Exodos'
@@ -30,9 +31,37 @@ const accountType =
 }
 
 class App extends React.Component {
-  state = {
-    todos: [],
-    currentAccount: accountType.EXODO
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        todos: [],
+        email:'algo',
+        currentAccount: accountType.EXODITO,
+        loginRedirect: false
+      }
+    this.login = this.login.bind(this)
+
+  }
+
+  login(user){
+    /*
+    TODO: fetch user
+
+    db = firebase.firestore();
+      db.collection('Usuarios')
+      .doc(id_exodo)
+      .get()
+      .then((result) => {
+        this.setState({
+        id: result.ref.id,
+        email: result.data().email,
+        nombre: result.data().nombre,
+        tipoExodo: result.data().tipoExodo,
+        });
+    });
+    */
+    this.setState({email: user, currentAccount: accountType.AG, loginRedirect: true})
   }
 
   componentDidMount() {
@@ -43,6 +72,10 @@ class App extends React.Component {
 
   render()
   {
+    if(this.state.loginRedirect){
+      this.setState({loginRedirect: false})
+      return <Router><Redirect to='/'/></Router>;
+    }
     switch(this.state.currentAccount)
     {
       case accountType.EXODITO: return this.renderExodito();
@@ -56,23 +89,21 @@ class App extends React.Component {
   {
     return (
       <Router>
-      <div className="App">
+      <div className="App" style={{backgroundImage: `url(https://movimientoexodo.com/wp-content/uploads/2015/01/Untitled-4.jpg)`,backgroundRepeat: "no-repeat",backgroundAttachment: "fixed"}}>
+        <Header/>
         <div className="container">
-        <link
-          rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous"
-        />
-          <Header/>
-          <Route exact path = "/" component = {Inicio} render = {props => (
-            <React.Fragment>
-            </React.Fragment>
-          )}/>
-          <Route path="/nosotros" component = {Nosotros}/>
-          <Route path="/nuestros-valores" component = {NuestrosValores}/>
-          <Footer/>
+          <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossOrigin="anonymous"
+          />
+          <Route exact path = "/" component={Inicio}/>
+          <Route path="/nosotros" component={Nosotros}/>
+          <Route path="/nuestros-valores" component={NuestrosValores}/>
+          <Route path="/login" component={() => <Login login={this.login}/>} />
         </div>
+        <Footer/>
       </div>
       </Router>
     );
