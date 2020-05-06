@@ -22,6 +22,7 @@ import CuentaExodo from './components/pages/Exodo/CuentaExodo'
 // import uuid from 'uuid';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import * as firebase from 'firebase'
 
 const accountType =
 {
@@ -29,6 +30,9 @@ const accountType =
   EXODO: 'Exodo',
   AG: 'AG'
 }
+
+var db;
+
 
 class App extends React.Component {
 
@@ -45,23 +49,20 @@ class App extends React.Component {
   }
 
   login(user){
-    /*
-    TODO: fetch user
-
     db = firebase.firestore();
       db.collection('Usuarios')
-      .doc(id_exodo)
+      .where('email', '==', user)
       .get()
-      .then((result) => {
-        this.setState({
-        id: result.ref.id,
-        email: result.data().email,
-        nombre: result.data().nombre,
-        tipoExodo: result.data().tipoExodo,
-        });
+      .then(result => {
+        result.forEach(doc => {
+          var acType = doc.data().tipoExodo ? accountType.EXODO : accountType.AG;
+          this.setState({
+            email: doc.data().email,
+            currentAccount: acType,
+            loginRedirect: true
+          });
+        })
     });
-    */
-    this.setState({email: user, currentAccount: accountType.AG, loginRedirect: true})
   }
 
   componentDidMount() {
@@ -123,8 +124,8 @@ class App extends React.Component {
             crossOrigin="anonymous"
           />
           <Route exact path = "/" component = {AvisosExodo}/>
-          <Route path="/datos-del-exodo" component = {DatosDelExodo}/>
-          <Route path="/cuenta-exodo" component = {CuentaExodo}/>
+          <Route path="/datos-del-exodo" component={DatosDelExodo}/>
+          <Route path="/cuenta-exodo" component={() => <CuentaExodo email={this.state.email}></CuentaExodo>}/>
         </div>
         <Footer/>
       </div>
