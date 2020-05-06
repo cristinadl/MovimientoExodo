@@ -7,7 +7,7 @@ export default function Header(props) {
     return (
         <header style = {headerStyle}>
           <Navbar bg="dark" variant="dark">
-              <Navbar.Brand href="#home">
+              <Navbar.Brand as={Link} to="/">
                   <img
                       alt=""
                       src="http://movimientoexodo.com/wp-content/uploads/2015/12/logoOKK.png"

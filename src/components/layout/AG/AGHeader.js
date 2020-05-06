@@ -7,7 +7,7 @@ export default function AGHeader() {
     return (
         <header style={headerStyle}>
             <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="#home">
+                <Navbar.Brand as={Link} to="/">
                     <img
                         alt=""
                         src="http://movimientoexodo.com/wp-content/uploads/2015/12/logoOKK.png"
@@ -22,7 +22,7 @@ export default function AGHeader() {
                         <Nav.Link as={Link} to="/exodos">Éxodos</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="/cuenta-ag">Cuenta</Nav.Link>
+                        <Nav.Link as={Link} to="/cuenta-ag">Cuenta</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
