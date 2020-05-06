@@ -1,43 +1,79 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
-import {Container, Row, Col} from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'reactstrap';
 import Card from 'react-bootstrap/Card'
+import Jumbotron from 'react-bootstrap/Jumbotron'
+import Button from 'react-bootstrap/Button'
 
 
 export default function Inicio() {
     return (
         <Card>
-        <Card.Body>
-            <h1>MOVIMIENTO ÉXODO</h1>
-            <h3>Somos un grupo formal y dináico, constituido por adolecentes en busca de una formación integral</h3>
-            <Link style = {linkStyle} to = "/nosotros"><button>SOBRE NOSOTROS</button></Link>
-            <Container>
-                <Row>
-                    <Col>
-                        <h5>¿Quienes Somos?</h5>
-                        <h6>{quienesSomos}</h6>
-                    </Col>
-                    <Col>
-                        <h5>Nuestros Valores</h5>
-                        <h6>{nuestrosValores}</h6>
-                    </Col>
-                    <Col>
-                        <h5>Nuestra Historia</h5>
-                        <h6>{nuestraHistoria}</h6>
-                    </Col>
-                    <Col>
-                        <h5>Nuestra Motivación</h5>
-                        <h6>{nuestraMotivacion}</h6>
-                    </Col>
-                </Row>
-            </Container>
-            <h2>{familiaExodo}</h2>
-            <h4>{unidos}</h4>
-            <div>
-                <h3>{interesado}</h3>
-                <button>CONTACTO</button>
-            </div>
-        </Card.Body>
+            <Card.Body>
+                <Jumbotron style={jumbotronStyle}>
+                    <h1>MOVIMIENTO ÉXODO</h1>
+                    <p>
+                        Somos un grupo formal y dináico, constituido por adolecentes en busca de una formación integral.
+                    </p>
+                    <p>
+                        <Link style={linkStyle} to="/nosotros"><Button variant="primary">SOBRE NOSOTROS</Button></Link>
+                    </p>
+                </Jumbotron>
+                <Container>
+                    <Row>
+                        <Col>
+                            <Card style={{ width: '14rem' }}>
+                                <Card.Img variant="top" src="http://movimientoexodo.com/wp-content/uploads/2016/07/13871968_10205584248279174_425006952_n.jpg" />
+                                <Card.Body>
+                                    <Card.Title>¿Quienes Somos?</Card.Title>
+                                    <Card.Text>
+                                        {quienesSomos}
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card style={{ width: '14rem' }}>
+                                <Card.Img variant="top" src="http://movimientoexodo.com/wp-content/uploads/2015/12/slide1ww-320x200.jpg" />
+                                <Card.Body>
+                                    <Card.Title>Nuestros Valores</Card.Title>
+                                    <Card.Text>
+                                        {nuestrosValores}
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card style={{ width: '14rem' }}>
+                                <Card.Img variant="top" src="http://movimientoexodo.com/wp-content/uploads/2016/07/13874862_10205584207598157_1726164843_n.jpg" />
+                                <Card.Body>
+                                    <Card.Title>Nuestra Historia</Card.Title>
+                                    <Card.Text>
+                                        {nuestraHistoria}
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card style={{ width: '14rem' }}>
+                                <Card.Img variant="top" src="http://movimientoexodo.com/wp-content/uploads/2015/12/slide1-320x200.jpg" />
+                                <Card.Body>
+                                    <Card.Title>Nuestra Motivación</Card.Title>
+                                    <Card.Text>
+                                        {nuestraMotivacion}
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+                <h2>{familiaExodo}</h2>
+                <h4>{unidos}</h4>
+                <div>
+                    <h3>{interesado}</h3>
+                    <button>CONTACTO</button>
+                </div>
+            </Card.Body>
         </Card>
     )
 }
@@ -56,3 +92,9 @@ const familiaExodo = "La Familia Éxodo crece bajo impulso del Espíritu para ha
 const unidos = "“Unidos con Cristo para siempre. Juntos caminaremos… y en Cristo nos liberaremos”"
 
 const interesado = "¿Estas interesad@ en unirte a Grupo Éxodo? Contáctanos y te acercaremos al grupo más cercano"
+
+const jumbotronStyle = {
+    background: 'url(http://movimientoexodo.com/wp-content/uploads/2015/07/slider_bg_3.jpg) no-repeat center',
+    backgroundSize: "110% 100%",
+    color: 'white'
+}
