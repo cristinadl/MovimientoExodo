@@ -9,6 +9,28 @@ import { Container } from 'reactstrap'
 import * as firebase from 'firebase'
 import './AG.css';
 
+var config = {
+  apiKey: "AIzaSyC-g6SCIemVM1bwO_tRqGBNnQKWszvXUWo",
+  authDomain: "dbmovimientoexodo.firebaseapp.com",
+  databaseURL: "https://dbmovimientoexodo.firebaseio.com",
+  projectId: "dbmovimientoexodo",
+  storageBucket: "dbmovimientoexodo.appspot.com",
+  messagingSenderId: "299145830200",
+  appId: "1:299145830200:web:712fa8936de201ff1d2bcd",
+  measurementId: "G-74LRPCPFTV"
+};
+
+var secondaryApp = firebase.initializeApp(config, "Secondary");
+
+const isEmail = (email) =>{
+  const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (email.match(regEx)) return true;
+  else return false;
+}
+const isEmpty = (string) =>{
+  if(string.trim() === '') return true;
+  else return false;
+}
 
 export default class CrearExodo extends React.Component {
   constructor(props) {
@@ -30,18 +52,113 @@ export default class CrearExodo extends React.Component {
   createExodo(event) {
       event.preventDefault();
       this.setState({loading: true, complete: false})
-      this.db.collection('Usuarios').add({
-          nombre: this.state.nombre,
-          email: this.state.email,
-          contraseña: this.state.contraseña,
-          tipoExodo: this.state.tipoExodo
-      }).then(() => {
+
+      const newUser = {
+        email: this.state.email,
+        password: this.state.contraseña,
+        handle: this.state.nombre,
+        tipoExodo: this.state.tipoExodo
+      }
+
+      let errors = {};
+
+      if(isEmpty(newUser.email)){
+          errors.email = 'campo obligatorio'
+      }else if (!isEmail(newUser.email)){
+          errors.email = 'Debe ser un correo válido'
+      }
+
+      if(isEmpty(newUser.password)) errors.password = 'campo obligatorio'
+      //if(newUser.password != newUser.confirmPassword) errors.password = 'No coincide'
+      if(isEmpty(newUser.handle)) errors.handle = 'campo obligatorio'
+
+      if(Object.keys(errors).length > 0) return 
+
+      //TODO: Validar data
+      let token, userId, userCredentials;
+      firebase.firestore().doc(`/Usuarios/${newUser.handle}`).get()
+        .then(doc =>{
+            if(doc.exists){
+                return null
+            } else {
+                return secondaryApp
+            .auth()
+            .createUserWithEmailAndPassword(newUser.email, newUser.password)
+            }
+        })
+        .then(data =>{
+            userId = data.user.uid;
+            return data.user.getIdToken();
+        })
+        .then(tokenId => {
+            token = tokenId;
+            if(newUser.tipoExodo){
+                userCredentials = {
+                    nombre: newUser.handle,
+                    Internacional: false,
+                    videoLink: " ",
+                    fotos: [ ],
+                    logo: " ",
+                    Estado: " ",
+                    porra: " ",
+                    cantidadExoditos: 0,
+                    nombreDeGrupo: " ",
+                    Pais: " ",
+                    tipoExodo: true,
+                    Contacto: {
+                        RedesSociales: {
+                            Twitter: " ",
+                            Facebook: " "
+                        },
+                        Telefono: " "
+                    },
+                    imagenPerfil: {
+                      imagen: " ",
+                      tipo: " "
+                    },
+                    tribus: {
+                        Levi: " ",
+                        Juda: " ",
+                        Ruben: " ",
+                        Simeon: " "
+                    },
+                    email: newUser.email,
+                    userId
+                }
+            } else {
+                userCredentials = {
+                    nombre: newUser.handle,
+                    tipoExodo: false,
+                    Contacto: {
+                        RedesSociales: {
+                            Twitter: " ",
+                            Facebook: " "
+                        },
+                        Telefono: " "
+                    },
+                    imagenPerfil: {
+                      imagen: " ",
+                      tipo: " "
+                    },
+                    email: newUser.email,
+                    userId
+                };
+            };
+            return firebase.firestore().doc(`/Usuarios/${newUser.handle}`).set(userCredentials);
+        })
+        .then(()=>{
           console.log('Success'); // Cambiar por feedback al usuario
           this.setState({loading: false, complete: true})
-      }).catch((error) => {
-          console.log('Error al crear Exodo'); // Cambiar por feedback al usuario
-      })
-      event.preventDefault();
+        })
+        .catch(err => {
+            console.log(err);
+            if(err.code === "auth/email-already-in-use"){
+                console.log({ email: "El email ya existe"});
+            } else {
+              console.log({ error: err.code});
+            }  
+            event.preventDefault();
+        })
   }
 
   handleInput(event) {
