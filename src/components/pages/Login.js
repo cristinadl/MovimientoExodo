@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card'
 import { Container } from 'reactstrap'
 import * as firebase from 'firebase'
 import './loader.css';
+import Alert from 'react-bootstrap/Alert'
 
 
 export default class CrearExodo extends React.Component {
@@ -13,8 +14,10 @@ export default class CrearExodo extends React.Component {
     this.db = firebase.firestore();
     this.state = {
       email: '',
-      contraseña: '',
+      contrasena: '',
       loading: false,
+      error: false,
+      passwordEmpty: false
     }
     this.login = this.login.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -22,22 +25,26 @@ export default class CrearExodo extends React.Component {
 
   }
 
+  isEmpty(string){
+    return string.trim() === ''
+  }
+
   login(event) {
       event.preventDefault();
-      this.setState({loading: true})
-      this.loginData(this.state.email)
-      /*
-      TODO: Validate credentials
-      this.db.collection('Usuarios').add({
-          email: this.state.email,
-          contraseña: this.state.contraseña,
-      }).then(() => {
-          this.loginData(this.email);
-      }).catch((error) => {
-          console.log('Error al crear Exodo'); // Cambiar por feedback al usuario
-      })
-      */
-      event.preventDefault();
+      if(this.isEmpty(this.state.contrasena)){
+        this.setState({passwordEmpty: true})
+      } else {
+        this.setState({loading: true, error: false})
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.contrasena).then((Credential) => {
+            //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
+            var credential = Credential;
+            this.loginData(credential.user.email)
+        }).catch((error) => {
+            console.log(error)
+            this.setState({loading: false, error: true})
+        })
+        event.preventDefault();
+      }
   }
 
   handleInput(event) {
@@ -63,12 +70,14 @@ export default class CrearExodo extends React.Component {
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" name="contraseña" placeholder="Contraseña" value={this.state.contraseña} onChange={this.handleInput} />
+                <Form.Control type="password" name="contrasena" placeholder="Contraseña" value={this.state.contraseña} onChange={this.handleInput} />
               </Form.Group>
-              <Button variant="dark" type="submit">
+              <Button variant="dark" type="submit" style={{marginBottom: '10px'}}>
                 Iniciar sesión
               </Button>
               { this.state.loading && <div className='loader center'/>}
+              { this.state.error && <Alert variant='danger' className='center'>Los datos son incorrectos</Alert>}
+              { this.state.passwordEmpty && <Alert variant='danger' className='center'>La contraseña no puede estar vacía</Alert>}
             </Form>
           </Card.Body>
         </Card>
