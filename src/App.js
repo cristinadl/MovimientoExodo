@@ -151,7 +151,7 @@ class App extends React.Component {
           <Route path="/exodos" component={Exodos}/>
           <Route path="/detalle-exodo/:id_exodo" component={DetalleExodo}/>
           <Route path="/crear-exodo" component={CrearExodo}/>
-          <Route path="/cuenta-ag" component={CuentaAG}/>
+          <Route path="/cuenta-ag" component={() => <CuentaAG email={this.state.email}></CuentaAG>}/>
         </div>
         <Footer/>
       </div>

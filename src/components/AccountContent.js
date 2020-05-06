@@ -13,7 +13,7 @@ export class AccountContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        username: "Foo",
+        username: props.username,
         newPassword: ""
     }
     this.handleInput = this.handleInput.bind(this);
