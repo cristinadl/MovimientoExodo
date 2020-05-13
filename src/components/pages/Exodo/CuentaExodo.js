@@ -15,30 +15,17 @@ export default class CuentaExodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            email: props.email,
             userHasProfilePic: false,
             profilePic: "",
             invalidFile: true,
             loadedFile: null,
-            email: props.email
+            id: props.id
         }
         this.verifyFile = this.verifyFile.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.toBase64 = this.toBase64.bind(this);
       }
-
-    loadData(){
-      db = firebase.firestore();
-        db.collection('Usuarios')
-        .where('email', '==', this.state.email)
-        .get()
-        .then((result) => {
-          this.setState({
-          email: result.data().email,
-          nombre: result.data().nombre,
-          tipoExodo: result.data().tipoExodo,
-          });
-      });
-    }
 
     render() {
         return (
@@ -100,15 +87,26 @@ export default class CuentaExodo extends Component {
 
 
 
-                <AccountContent username={this.state.email}></AccountContent>
+                <AccountContent email={this.state.email}></AccountContent>
             </div>
         )
     }
 
-    componentDidMount()
-    {
-        db = firebase.firestore();
-        this.signIn('agregional@gmail.com', '1234567');
+    componentDidMount(){
+      db = firebase.firestore();
+      db.collection('Usuarios')
+      .where('email', '==', this.state.email)
+      .get()
+      .then(result => {
+        result.forEach(doc => {
+          console.log(doc.data().nombre)
+          this.setState({
+            email: doc.data().nombre,
+            nombre: doc.data().nombre,
+            tipoExodo: doc.data().tipoExodo
+          })
+        })
+      })
     }
 
     signIn(email, password)  {

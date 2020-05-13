@@ -70,14 +70,6 @@ export default class Exodos extends Component {
         });
         this.setState({exodos: exodos, loading: false})
       });
-  /*  for(let i = 0; i < 10; i++){
-      exodos.push({
-        id: i,
-        nombre: 'Nombre del grupo ' + (i + 1),
-        logo: logo,
-      });
-    }
-    this.setState({exodos: exodos})*/
   }
 
   render() {

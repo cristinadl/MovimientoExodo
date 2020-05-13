@@ -33,6 +33,10 @@ const accountType =
 
 var db;
 
+function Logout() {
+  localStorage.clear();
+  window.location.href = '/';
+}
 
 class App extends React.Component {
 
@@ -48,21 +52,21 @@ class App extends React.Component {
 
   }
 
-  login(user){
+  login(email){
     db = firebase.firestore();
-      db.collection('Usuarios')
-      .where('email', '==', user)
-      .get()
-      .then(result => {
-        result.forEach(doc => {
-          var acType = doc.data().tipoExodo ? accountType.EXODO : accountType.AG;
-          this.setState({
-            email: doc.data().email,
-            currentAccount: acType,
-            loginRedirect: true
-          });
+    db.collection('Usuarios')
+    .where('email', '==', email)
+    .get()
+    .then(result => {
+      result.forEach(doc => {
+        var acType = doc.data().tipoExodo ? accountType.EXODO : accountType.AG;
+        this.setState({
+          email: doc.data().email,
+          currentAccount: acType,
+          loginRedirect: true
         })
-    });
+      })
+    })
   }
 
   componentDidMount() {
@@ -124,8 +128,9 @@ class App extends React.Component {
             crossOrigin="anonymous"
           />
           <Route exact path = "/" component = {AvisosExodo}/>
-          <Route path="/datos-del-exodo" component={DatosDelExodo}/>
+          <Route path="/datos-del-exodo" component={() => <DatosDelExodo email={this.state.email}></DatosDelExodo>}/>
           <Route path="/cuenta-exodo" component={() => <CuentaExodo email={this.state.email}></CuentaExodo>}/>
+          <Route path="/logout" component={Logout} />
         </div>
         <Footer/>
       </div>
@@ -152,6 +157,7 @@ class App extends React.Component {
           <Route path="/detalle-exodo/:id_exodo" component={DetalleExodo}/>
           <Route path="/crear-exodo" component={CrearExodo}/>
           <Route path="/cuenta-ag" component={() => <CuentaAG email={this.state.email}></CuentaAG>}/>
+          <Route path="/logout" component={Logout} />
         </div>
         <Footer/>
       </div>

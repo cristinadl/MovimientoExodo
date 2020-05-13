@@ -33,7 +33,7 @@ export default class CuentaAG extends Component {
 
   render(){
     return (
-        <AccountContent username={this.state.email}></AccountContent>
+        <AccountContent email={this.state.email}></AccountContent>
     )
   }
 }

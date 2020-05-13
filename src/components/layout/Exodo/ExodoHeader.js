@@ -21,7 +21,8 @@ export default function ExodoHeader() {
                       <Nav.Link as={Link} to="/datos-del-exodo">Datos del Éxodo</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link as={Link} to="/cuenta-exodo">Cuenta</Nav.Link>
+                      <Nav.Link as={Link} to="/cuenta-exodo">Cuenta</Nav.Link>
+                      <Nav.Link as={Link} to="/logout">Cerrar sesión</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

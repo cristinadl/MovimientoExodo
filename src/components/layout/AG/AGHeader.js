@@ -23,6 +23,7 @@ export default function AGHeader() {
                     </Nav>
                     <Nav>
                         <Nav.Link as={Link} to="/cuenta-ag">Cuenta</Nav.Link>
+                        <Nav.Link as={Link} to="/logout">Cerrar sesión</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
