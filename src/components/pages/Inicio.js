@@ -78,7 +78,7 @@ export default function Inicio() {
                 <Alert variant="primary">
                     <Alert.Heading>{interesado}</Alert.Heading>
                     <p>
-                        {"Movidos por el amor a dios"}
+                        {uneteExodo}
                     </p>
                     <hr />
                     <p className="mb-0">
@@ -108,6 +108,8 @@ const familiaExodo = "La Familia Éxodo crece bajo impulso del Espíritu para ha
 const unidos = "“Unidos con Cristo para siempre. Juntos caminaremos… y en Cristo nos liberaremos”"
 
 const interesado = "¿Estas interesad@ en unirte a Grupo Éxodo? Contáctanos y te acercaremos al grupo más cercano"
+
+const uneteExodo = "Únete y pertenece a la vida de la Iglesia y vive en Ella para su edificación. Por medio de la Iglesia recibimos la misión que continúa la obra de Jesús, el nuevo y definitivo Moisés, la ejercemos en su nombre y según nuestra vocación."
 
 const jumbotronStyle = {
     background: 'url(http://movimientoexodo.com/wp-content/uploads/2015/07/slider_bg_3.jpg) no-repeat center',
