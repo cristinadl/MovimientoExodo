@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 import Card from 'react-bootstrap/Card'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 
 
 export default function Inicio() {
@@ -67,14 +68,29 @@ export default function Inicio() {
                         </Col>
                     </Row>
                 </Container>
-                <h2>{familiaExodo}</h2>
-                <h4>{unidos}</h4>
+                <Jumbotron style={jumbotronStyle2} >
+                    <h2>{familiaExodo}</h2>
+                    <p style={{ color: 'gray' }}>
+                        {unidos}
+                    </p>
+
+                </Jumbotron>
+                <Alert variant="primary">
+                    <Alert.Heading>{interesado}</Alert.Heading>
+                    <p>
+                        {"Movidos por el amor a dios"}
+                    </p>
+                    <hr />
+                    <p className="mb-0">
+                        <Button variant="outline-primary">CONTACTO</Button>
+                    </p>
+                </Alert>
                 <div>
-                    <h3>{interesado}</h3>
-                    <button>CONTACTO</button>
+                    <h3></h3>
+
                 </div>
             </Card.Body>
-        </Card>
+        </Card >
     )
 }
 
@@ -98,3 +114,7 @@ const jumbotronStyle = {
     backgroundSize: "110% 100%",
     color: 'white'
 }
+const jumbotronStyle2 = {
+    background: 'white'
+}
+
