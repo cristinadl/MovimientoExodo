@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 import Card from 'react-bootstrap/Card'
+import CardColumns from 'react-bootstrap/CardDeck'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
@@ -28,84 +29,82 @@ export default function NuestrosValores() {
                         sobre la base de 5 valores: Físico, Técnico, Psico-Social, Cultural y Religioso.
                     </h2>
                     <br></br>
-                    <Button variant="outline-primary">Nosotoros</Button>   <Button variant="primary">Grupos Exodo</Button>
 
                 </Jumbotron>
             </Card.Body>
             <Container>
                 <Row>
-                    <Col>
-                        <Figure>
-                            <Figure.Image
-                                width={171}
+                    <CardColumns >
+                        <Card border="light" style={{ width: '18rem' }}>
+                            <Card.Img width={171}
                                 height={180}
                                 alt="171x180"
-                                src="https://image.flaticon.com/icons/svg/2072/2072707.svg"
-                            />
-                            <Figure.Caption>
-                                <h6>VALOR FÍSICO</h6>
+                                src="https://image.flaticon.com/icons/svg/2072/2072707.svg" />
+                            <Card.Body>
+                            <Card.Title>VALOR FÍSICO</Card.Title>
+                            <Card.Text>
                                 {valorFisico}
-                            </Figure.Caption>
-                        </Figure>
-                    </Col>
-                    <Col >
-                        <Figure>
-                            <Figure.Image
-                                width={171}
+                            </Card.Text>
+                            </Card.Body>
+                        </Card>
+                        <Card border="light" style={{ width: '18rem' }}>
+                            <Card.Img width={171}
                                 height={180}
                                 alt="171x180"
-                                src="https://image.flaticon.com/icons/png/512/2051/2051522.png"
-                            />
-                            <Figure.Caption>
-                                <h6>VALOR TÉCNICO</h6>
+                                src="https://image.flaticon.com/icons/svg/2362/2362537.svg"/>
+                            <Card.Body>
+                            <Card.Title>VALOR TÉCNICO</Card.Title>
+                            <Card.Text>
                                 {valorTecnico}
-                            </Figure.Caption>
-                        </Figure>
-                    </Col>
-                    <Col>
-                        <Figure>
-                            <Figure.Image
+                            </Card.Text>
+                            </Card.Body>
+                        </Card>
+
+                        <Card border="light" style={{ width: '18rem' }}>
+                            <Card.Img 
                                 width={171}
                                 height={180}
                                 alt="171x180"
-                                src="https://image.flaticon.com/icons/svg/2395/2395484.svg"
-                            />
-                            <Figure.Caption>
-                                <h6>VALOR PSICO-SOCIAL</h6>
+                                src="https://image.flaticon.com/icons/svg/2395/2395484.svg"/>
+                            <Card.Body>
+                            <Card.Title>VALOR PSICO-SOCIAL</Card.Title>
+                            <Card.Text>
                                 {valorPsico}
-                            </Figure.Caption>
-                        </Figure>
-                    </Col>
+                            </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </CardColumns>
                 </Row>
-                <Row>
-                    <Col>
-                        <Figure>
-                            <Figure.Image
+                <br />
+                <Row className="justify-content-md-center">
+                    <CardColumns>
+                        <Card border="light" style={{ width: '18rem' }}>
+                            <Card.Img 
                                 width={171}
                                 height={180}
                                 alt="171x180"
-                                src="https://image.flaticon.com/icons/svg/2052/2052246.svg"
-                            />
-                            <Figure.Caption>
-                                <h6>VALOR CULTURAL</h6>
+                                src="https://image.flaticon.com/icons/svg/2052/2052246.svg"/>
+                            <Card.Body>
+                            <Card.Title>VALOR CULTURAL</Card.Title>
+                            <Card.Text>
                                 {valorCultral}
-                            </Figure.Caption>
-                        </Figure>
-                    </Col>
-                    <Col>
-                        <Figure>
-                            <Figure.Image
+                            </Card.Text>
+                            </Card.Body>
+                        </Card>
+                        <Card border="light" style={{ width: '18rem' }}>
+                            <Card.Img 
                                 width={171}
                                 height={180}
                                 alt="171x180"
-                                src="https://image.flaticon.com/icons/svg/1495/1495565.svg"
-                            />
-                            <Figure.Caption>
-                                <h6>VALOR RELIGIOSO</h6>
-                                {valorReligioso}
-                            </Figure.Caption>
-                        </Figure>
-                    </Col>
+                                src="https://image.flaticon.com/icons/svg/1495/1495565.svg"/>
+                            <Card.Body>
+                            <Card.Title>VALOR CULTURAL</Card.Title>
+                            <Card.Text>
+                                {valorCultral}
+                            </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </CardColumns>
                 </Row>
             </Container>
             <Alert variant="primary" style={{ margin: '1rem' }}>

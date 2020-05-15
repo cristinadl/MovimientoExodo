@@ -32,6 +32,7 @@ export default function Inicio() {
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
+                             <br />
                         </Col>
                         <Col>
                             <Card style={{ width: '14rem' }}>
