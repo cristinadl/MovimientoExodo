@@ -49,12 +49,13 @@ export default function NuestrosValores() {
                         </Figure>
                     </Col>
                     <Col >
-                        <Figure>
+                        <Figure >
                             <Figure.Image
                                 width={171}
                                 height={180}
                                 alt="171x180"
                                 src="https://image.flaticon.com/icons/png/512/2051/2051522.png"
+
                             />
                             <Figure.Caption>
                                 <h6>VALOR TÉCNICO</h6>
