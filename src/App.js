@@ -8,10 +8,11 @@ import AGHeader from './components/layout/AG/AGHeader';
 import ExodoHeader from './components/layout/Exodo/ExodoHeader'
 import Inicio from './components/pages/Inicio';
 import Nosotros from './components/pages/Nosotros';
+import Exodos from './components/pages/Exodos'
 import Login from './components/pages/Login';
 import AvisosAG from './components/pages/AG/AvisosAG';
 import SubirAviso from './components/pages/AG/SubirAviso';
-import Exodos from './components/pages/AG/Exodos'
+import AGExodos from './components/pages/AG/Exodos'
 import CrearExodo from './components/pages/AG/CrearExodo';
 import DetalleExodo from './components/pages/AG/DetalleExodo';
 import CuentaAG from './components/pages/AG/CuentaAG';
@@ -107,6 +108,7 @@ class App extends React.Component {
           <Route path="/nosotros" component={Nosotros}/>
           <Route path="/nuestros-valores" component={NuestrosValores}/>
           <Route path="/login" component={() => <Login login={this.login}/>} />
+          <Route path="/exodos" component={Exodos}/>
         </div>
         <Footer/>
       </div>
@@ -153,7 +155,7 @@ class App extends React.Component {
           />
           <Route exact path = "/" component={AvisosAG}/>
           <Route path="/subir-aviso" component={SubirAviso}/>
-          <Route path="/exodos" component={Exodos}/>
+          <Route path="/exodos" component={AGExodos}/>
           <Route path="/detalle-exodo/:id_exodo" component={DetalleExodo}/>
           <Route path="/crear-exodo" component={CrearExodo}/>
           <Route path="/cuenta-ag" component={() => <CuentaAG email={this.state.email}></CuentaAG>}/>

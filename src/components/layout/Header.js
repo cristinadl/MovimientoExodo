@@ -20,6 +20,7 @@ export default function Header(props) {
                     <Nav.Link as={Link} to="/">Inicio</Nav.Link>
                     <Nav.Link as={Link} to="/nosotros">Nosotros</Nav.Link>
                     <Nav.Link as={Link} to="/nuestros-valores">Nuestros Valores</Nav.Link>
+                    <Nav.Link as={Link} to="/exodos">Grupos Exodo</Nav.Link>
                   </Nav>
                   <Nav>
                       <Nav.Link href="/login">Iniciar sesión</Nav.Link>
