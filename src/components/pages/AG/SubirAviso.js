@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row'
 import Alert from 'react-bootstrap/Alert'
 import { Container } from 'reactstrap'
 import * as firebase from 'firebase'
-import '../loader.css';
+import './AG.css';
 
 
 export default class SubirAviso extends React.Component {
@@ -22,6 +22,7 @@ export default class SubirAviso extends React.Component {
     }
     this.createPost = this.createPost.bind(this);
     this.handleInput = this.handleInput.bind(this);
+
   }
 
   createPost(event) {

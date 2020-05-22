@@ -1,13 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import {Link} from 'react-router-dom';
 
 export default function ExodoHeader() {
     return (
         <header style={headerStyle}>
             <Navbar bg="dark" variant="dark">
-                <Navbar.Brand as={Link} to="/">
+                <Navbar.Brand href="#home">
                     <img
                         alt=""
                         src="http://movimientoexodo.com/wp-content/uploads/2015/12/logoOKK.png"
@@ -17,12 +17,12 @@ export default function ExodoHeader() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                      <Nav.Link as={Link} to="/">Avisos</Nav.Link>
-                      <Nav.Link as={Link} to="/datos-del-exodo">Datos del Éxodo</Nav.Link>
+                        <Nav.Link href="/">Avisos</Nav.Link>
+                        <Nav.Link href="/datos-del-exodo">Datos del Éxodo</Nav.Link>
+
                     </Nav>
                     <Nav>
-                      <Nav.Link as={Link} to="/cuenta-exodo">Cuenta</Nav.Link>
-                      <Nav.Link as={Link} to="/logout">Cerrar sesión</Nav.Link>
+                        <Nav.Link href="/cuenta-exodo">Cuenta</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -35,4 +35,9 @@ const headerStyle = {
     color: '#fff',
     textAlign: 'center',
     padding: '10px'
+}
+
+const linkStyle = {
+    color: '#fff',
+    textDecoration: 'none'
 }
