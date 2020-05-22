@@ -13,7 +13,7 @@ export class AccountContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        username: "Foo",
+        email: props.email,
         newPassword: ""
     }
     this.handleInput = this.handleInput.bind(this);
@@ -37,7 +37,7 @@ export class AccountContent extends Component {
                 <Form onSubmit={this.changePassword}>
                     <Form.Group as={Row}>
                         <Form.Label column sm="2">
-                            Usuario: {this.state.username}
+                            Usuario: {this.state.email}
                         </Form.Label>
                     </Form.Group>
                     <Form.Group as={Row}>
@@ -57,25 +57,21 @@ export class AccountContent extends Component {
         )
     }
 
-    componentDidMount()
-    {
-        db = firebase.firestore();
-        this.signIn('agregional@gmail.com', '1234567');
-
-        this.render();
-    //     var username;
-    //     console.log("w");
-
-    //     db.collection('Usuarios').where("userId", "==", "bjGPO1x4ILUL3H3Zsmwo235RWh53")
-    //   .get() // Metodo de Firebase para obtener los datos
-    //   .then((Snap) => {
-    //     Snap.forEach(function(user) {
-    //         username = user.data().nombre
-    //         console.log(user.data().nombre);
-    //       });
-    //       this.setState({username: username})
-    //     });
-
+    componentDidMount(){
+      db = firebase.firestore();
+      db.collection('Usuarios')
+      .where('email', '==', this.state.email)
+      .get()
+      .then(result => {
+        result.forEach(doc => {
+          console.log(doc.data().nombre)
+          this.setState({
+            email: doc.data().nombre,
+            nombre: doc.data().nombre,
+            tipoExodo: doc.data().tipoExodo
+          })
+        })
+      })
     }
 
     handleInput(event)
