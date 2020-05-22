@@ -5,22 +5,22 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
-
+ 
 var db;
 var credential;
-
+ 
 export class AccountContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        email: props.email,
+        username: "Foo",
         newPassword: ""
     }
     this.handleInput = this.handleInput.bind(this);
     this.changePassword = this.changePassword.bind(this);
   }
-
-
+ 
+ 
     render(){
         return (
             // <div>
@@ -37,7 +37,7 @@ export class AccountContent extends Component {
                 <Form onSubmit={this.changePassword}>
                     <Form.Group as={Row}>
                         <Form.Label column sm="2">
-                            Usuario: {this.state.email}
+                            Usuario: {this.state.username}
                         </Form.Label>
                     </Form.Group>
                     <Form.Group as={Row}>
@@ -56,33 +56,36 @@ export class AccountContent extends Component {
             </Card>
         )
     }
-
-    componentDidMount(){
-      db = firebase.firestore();
-      db.collection('Usuarios')
-      .where('email', '==', this.state.email)
-      .get()
-      .then(result => {
-        result.forEach(doc => {
-          console.log(doc.data().nombre)
-          this.setState({
-            email: doc.data().nombre,
-            nombre: doc.data().nombre,
-            tipoExodo: doc.data().tipoExodo
-          })
-        })
-      })
+ 
+    componentDidMount()
+    {
+        db = firebase.firestore();
+ 
+        this.render();
+    //     var username;
+    //     console.log("w");
+ 
+    //     db.collection('Usuarios').where("userId", "==", "bjGPO1x4ILUL3H3Zsmwo235RWh53")
+    //   .get() // Metodo de Firebase para obtener los datos
+    //   .then((Snap) => {
+    //     Snap.forEach(function(user) {
+    //         username = user.data().nombre
+    //         console.log(user.data().nombre);
+    //       });
+    //       this.setState({username: username})
+    //     });
+ 
     }
-
+ 
     handleInput(event)
     {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-
+ 
         this.setState({[name]: value});
     }
-
+ 
     changePassword(event)
     {
         event.preventDefault();
@@ -95,23 +98,23 @@ export class AccountContent extends Component {
           });
         event.preventDefault();
     }
-
-    signIn(email, password)  {
-        firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
-            //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
-            console.log(Credential);
-            credential = Credential;
-            this.getUsername(credential.user.uid)
-        }).catch((error) => {
-            console.log(error.message);
-        })
-    }
-
+ 
+    // signIn(email, password)  {
+    //     firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
+    //         //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
+    //         console.log(Credential);
+    //         credential = Credential;
+    //         this.getUsername(credential.user.uid)
+    //     }).catch((error) => {
+    //         console.log(error.message);
+    //     })
+    // }
+ 
     getUsername(id)
     {
         var username;
         console.log(id);
-
+ 
         db.collection('Usuarios').where("userId", "==", id)
       .get() // Metodo de Firebase para obtener los datos
       .then((Snap) => {
@@ -123,5 +126,5 @@ export class AccountContent extends Component {
         });
     }
 }
-
+ 
 export default AccountContent
