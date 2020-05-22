@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 // import logo from './logo.svg';
 import './App.css';
 import Footer from './components/layout/Footer';
@@ -8,9 +8,11 @@ import AGHeader from './components/layout/AG/AGHeader';
 import ExodoHeader from './components/layout/Exodo/ExodoHeader'
 import Inicio from './components/pages/Inicio';
 import Nosotros from './components/pages/Nosotros';
+import Exodos from './components/pages/Exodos'
+import Login from './components/pages/Login';
 import AvisosAG from './components/pages/AG/AvisosAG';
 import SubirAviso from './components/pages/AG/SubirAviso';
-import Exodos from './components/pages/AG/Exodos'
+import AGExodos from './components/pages/AG/Exodos'
 import CrearExodo from './components/pages/AG/CrearExodo';
 import DetalleExodo from './components/pages/AG/DetalleExodo';
 import CuentaAG from './components/pages/AG/CuentaAG';
@@ -21,6 +23,7 @@ import CuentaExodo from './components/pages/Exodo/CuentaExodo'
 // import uuid from 'uuid';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import * as firebase from 'firebase'
 
 const accountType =
 {
@@ -29,10 +32,42 @@ const accountType =
   AG: 'AG'
 }
 
+var db;
+
+function Logout() {
+  localStorage.clear();
+  window.location.href = '/';
+}
+
 class App extends React.Component {
-  state = {
-    todos: [],
-    currentAccount: accountType.EXODO
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        todos: [],
+        email:'algo',
+        currentAccount: accountType.EXODITO,
+        loginRedirect: false
+      }
+    this.login = this.login.bind(this)
+
+  }
+
+  login(email){
+    db = firebase.firestore();
+    db.collection('Usuarios')
+    .where('email', '==', email)
+    .get()
+    .then(result => {
+      result.forEach(doc => {
+        var acType = doc.data().tipoExodo ? accountType.EXODO : accountType.AG;
+        this.setState({
+          email: doc.data().email,
+          currentAccount: acType,
+          loginRedirect: true
+        })
+      })
+    })
   }
 
   componentDidMount() {
@@ -43,6 +78,10 @@ class App extends React.Component {
 
   render()
   {
+    if(this.state.loginRedirect){
+      this.setState({loginRedirect: false})
+      return <Router><Redirect to='/'/></Router>;
+    }
     switch(this.state.currentAccount)
     {
       case accountType.EXODITO: return this.renderExodito();
@@ -56,23 +95,22 @@ class App extends React.Component {
   {
     return (
       <Router>
-      <div className="App">
+      <div className="App" style={{backgroundImage: `url(https://movimientoexodo.com/wp-content/uploads/2015/01/Untitled-4.jpg)`,backgroundRepeat: "no-repeat",backgroundAttachment: "fixed"}}>
+        <Header/>
         <div className="container">
-        <link
-          rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous"
-        />
-          <Header/>
-          <Route exact path = "/" component = {Inicio} render = {props => (
-            <React.Fragment>
-            </React.Fragment>
-          )}/>
-          <Route path="/nosotros" component = {Nosotros}/>
-          <Route path="/nuestros-valores" component = {NuestrosValores}/>
-          <Footer/>
+          <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossOrigin="anonymous"
+          />
+          <Route exact path = "/" component={Inicio}/>
+          <Route path="/nosotros" component={Nosotros}/>
+          <Route path="/nuestros-valores" component={NuestrosValores}/>
+          <Route path="/login" component={() => <Login login={this.login}/>} />
+          <Route path="/exodos" component={Exodos}/>
         </div>
+        <Footer/>
       </div>
       </Router>
     );
@@ -92,8 +130,9 @@ class App extends React.Component {
             crossOrigin="anonymous"
           />
           <Route exact path = "/" component = {AvisosExodo}/>
-          <Route path="/datos-del-exodo" component = {DatosDelExodo}/>
-          <Route path="/cuenta-exodo" component = {CuentaExodo}/>
+          <Route path="/datos-del-exodo" component={() => <DatosDelExodo email={this.state.email}></DatosDelExodo>}/>
+          <Route path="/cuenta-exodo" component={() => <CuentaExodo email={this.state.email}></CuentaExodo>}/>
+          <Route path="/logout" component={Logout} />
         </div>
         <Footer/>
       </div>
@@ -116,10 +155,11 @@ class App extends React.Component {
           />
           <Route exact path = "/" component={AvisosAG}/>
           <Route path="/subir-aviso" component={SubirAviso}/>
-          <Route path="/exodos" component={Exodos}/>
+          <Route path="/exodos" component={AGExodos}/>
           <Route path="/detalle-exodo/:id_exodo" component={DetalleExodo}/>
           <Route path="/crear-exodo" component={CrearExodo}/>
-          <Route path="/cuenta-ag" component={CuentaAG}/>
+          <Route path="/cuenta-ag" component={() => <CuentaAG email={this.state.email}></CuentaAG>}/>
+          <Route path="/logout" component={Logout} />
         </div>
         <Footer/>
       </div>
