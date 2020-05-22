@@ -10,14 +10,12 @@ import * as firebase from 'firebase'
 var db;
 var credential;
 var imageJSX = <img src="/Person-02.png" alt="Person-02" height="150" width="150"></img>;
-var username = "";
 
 export default class CuentaExodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             userHasProfilePic: false,
-            username: "",
             profilePic: "",
             invalidFile: true,
             loadedFile: null
@@ -25,7 +23,6 @@ export default class CuentaExodo extends Component {
         this.verifyFile = this.verifyFile.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.toBase64 = this.toBase64.bind(this);
-        this.getName = this.getName.bind(this);
       }
 
     render() {
@@ -96,7 +93,7 @@ export default class CuentaExodo extends Component {
     componentDidMount()
     {
         db = firebase.firestore();
-        this.signIn('agregional@gmail.com', '123456');
+        this.signIn('agregional@gmail.com', '1234567');
     }
 
     signIn(email, password)  {
@@ -112,8 +109,8 @@ export default class CuentaExodo extends Component {
 
     getProfilePicture(id)
     {
-        db = firebase.firestore();
         var image;
+        console.log(id);
 
         db.collection('Usuarios').where("userId", "==", id)
         .get() // Metodo de Firebase para obtener los datos
@@ -130,25 +127,6 @@ export default class CuentaExodo extends Component {
             }
           
         });
-    }
-
-    getName(uid)
-    {
-        return new Promise((resolve, reject) => {
-            var name;
-
-            db.collection('Usuarios').where("userId", "==", uid)
-            .get() // Metodo de Firebase para obtener los datos
-            .then((Snap) => {
-                Snap.forEach(function(user) {
-                name = user.data().nombre
-                console.log("name" + user.data().nombre);
-                resolve(name);
-                });
-                username = name;
-                this.setState({username: name})
-            });
-        })
     }
 
     verifyFile(event)
@@ -169,7 +147,7 @@ export default class CuentaExodo extends Component {
         this.setState({loadedFile: file})
     }
 
-    async uploadFile(event)
+    uploadFile(event)
     {
         event.preventDefault();
         var data;
@@ -179,22 +157,6 @@ export default class CuentaExodo extends Component {
             console.log(data);
         });
 
-        //firebase.database().ref("Usuarios/" + credential.user.uid).set({nombre: "agre"})
-        console.log("s");
-        console.log(firebase.auth().currentUser.uid);
-        
-        var uid = firebase.auth().currentUser.uid;
-        username = await this.getName(uid);
-        console.log(username);
-        db.collection("Usuarios").doc(username).update({
-            imagenPerfil: {imagen: data}
-        })
-        .then(function() {
-            console.log("Document successfully written!");
-        })
-        .catch(function(error) {
-            console.error("Error writing document: ", error);
-        });
     }
 
     toBase64(cb) {
