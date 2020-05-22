@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
 import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import Image from 'react-bootstrap/Image'
 import * as firebase from 'firebase'
 
@@ -13,12 +14,24 @@ function Exodo(props) {
   const exodo = props.exodo
   return (
     <Col xl={3} lg={4} md={6} sm={12}>
-      <Card className='my-2'>
-        <sup><Image className='icono' style={{float: 'right', marginTop: '20px', marginRight: '20px'}} src="https://cdn2.iconfinder.com/data/icons/thin-line-color-1/21/33-512.png" onClick={props.onClick}/></sup>
+      <Card onClick={props.selectExodo} className='my-2'>
         <Card.Img style={{width: "125px",height: '125px',display: "block",marginLeft: "auto",marginRight: "auto", marginTop: "5px"}} variant="top" src={exodo.logo} alt='No carga porque ps no hay nada'/>
         <Card.Body>
           <Card.Title>{exodo.nombre}</Card.Title>
-          <Link to={`/detalle-exodo/${exodo.id}`}><Image className='icono' src="https://image.flaticon.com/icons/png/512/1259/1259851.png"/></Link>
+        </Card.Body>
+      </Card>
+    </Col>
+  )
+}
+
+function ExodoData(props){
+  const exodo = props.exodo
+  return (
+    <Col xl={3} lg={4} md={6} sm={12}>
+      <Card onClick={props.selectExodo} className='my-2'>
+        <Card.Img style={{width: "125px",height: '125px',display: "block",marginLeft: "auto",marginRight: "auto", marginTop: "5px"}} variant="top" src={exodo.logo} alt='No carga porque ps no hay nada'/>
+        <Card.Body>
+          <Card.Title>{exodo.nombre}</Card.Title>
         </Card.Body>
       </Card>
     </Col>
@@ -30,27 +43,13 @@ export default class Exodos extends Component {
     super(props);
     this.state = {
       exodos: [],
+      internacional: [],
+      local: [],
+      exodo_id: null,
       loading: true
     };
-    this.exodos = React.createRef();
-  }
-
-  deleteExodo(exodo) {
-    const id = exodo.id
-    if (window.confirm("¿Desea eliminar al grupo exodo " + exodo.nombre + "?")) {
-      var exodos = [...this.state.exodos];
-      var index = exodos.indexOf(exodo)
-      console.log(index)
-      console.log(this.exodos.current.childNodes[0].childNodes[index])
-      this.exodos.current.childNodes[0].childNodes[index].setAttribute('style', 'filter: brightness(150%)')
-      db.collection('Usuarios').doc(id).delete().then(() => {
-        console.log('El Grupo Exodo ha sido eliminado');
-        exodos.splice(index, 1);
-        this.setState({exodos: exodos})
-      }).catch((error) => {
-        console.log('Se genero un error al borrar');
-      });
-    }
+    this.selectExodo = this.selectExodo.bind(this)
+    this.resetExodo = this.resetExodo.bind(this)
   }
 
   componentDidMount() {
@@ -68,28 +67,49 @@ export default class Exodos extends Component {
             logo: logo
           });
         });
-        this.setState({exodos: exodos, loading: false})
+        var internacional = exodos.filter(function(exodo) { return exodo.internacional })
+        var local = exodos.filter(function(exodo) { return !exodo.internacional})
+        this.setState({exodos: exodos, internacional: internacional, local:local, loading: false})
       });
+  }
+
+  selectExodo(id){
+    console.log('update')
+    console.log(id)
+    this.setState(
+        { exodo_id: id }
+      )
+  }
+
+  resetExodo(){
+    this.updateState(null)
   }
 
   render() {
     const plus_sign = 'https://cdn.pixabay.com/photo/2014/04/02/10/55/plus-304947_960_720.png'
-
+    var current_id = this.state.exodo_id;
     return (
       <div className='exodos' ref={this.exodos}>
-        <CardGroup>
-          { this.state.loading ? <div className='loader center'/> : this.state.exodos.map((exodo, index) => (<Exodo className='exodo' exodo={exodo} key={exodo.id} onClick={() => this.deleteExodo(exodo)}></Exodo>))}
-           {!this.state.loading && <Col xl={3} lg={4} md={6} sm={12}>
-            <Link to="/crear-exodo">
-              <Card className='my-2'>
-                <Card.Img style={{width: "125px",height: '125px',display: "block",marginLeft: "auto",marginRight: "auto", marginTop: "5px"}} variant="top" src={plus_sign} alt='No carga porque ps no hay nada'/>
-                <Card.Body>
-                  <Card.Title>Agregar nuevo</Card.Title>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>}
-        </CardGroup>
+      { this.state.exodo_id ?
+        <ExodoData exodo={this.state.exodos.filter(function(exodo) { return exodo.id == current_id })[0]}></ExodoData>
+        :
+          this.state.loading ? <div className='loader center'/> :
+            <div>
+            <Card Row>
+              <Card.Body>
+                <Card.Title> Internacional </Card.Title>
+                <CardGroup>{this.state.internacional.map((exodo, index) => (<Exodo className='exodo' exodo={exodo} key={exodo.id} selectExodo={() => this.selectExodo(exodo.id)}></Exodo>))}</CardGroup>
+              </Card.Body>
+            </Card>
+            <Card Row>
+            <Card.Body>
+              <Card.Title>Local</Card.Title>
+                <CardGroup>{this.state.local.map((exodo, index) => (<Exodo className='exodo' exodo={exodo} key={exodo.id} selectExodo={() => this.selectExodo(exodo.id)}></Exodo>))}</CardGroup>
+              </Card.Body>
+            </Card>
+            </div>
+
+      }
       </div>
     )
   }
