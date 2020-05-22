@@ -60,7 +60,6 @@ export class AccountContent extends Component {
     componentDidMount()
     {
         db = firebase.firestore();
-        this.signIn('agregional@gmail.com', '123456');
  
         this.render();
     //     var username;
@@ -100,16 +99,16 @@ export class AccountContent extends Component {
         event.preventDefault();
     }
  
-    signIn(email, password)  {
-        firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
-            //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
-            console.log(Credential);
-            credential = Credential;
-            this.getUsername(credential.user.uid)
-        }).catch((error) => {
-            console.log(error.message);
-        })
-    }
+    // signIn(email, password)  {
+    //     firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
+    //         //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
+    //         console.log(Credential);
+    //         credential = Credential;
+    //         this.getUsername(credential.user.uid)
+    //     }).catch((error) => {
+    //         console.log(error.message);
+    //     })
+    // }
  
     getUsername(id)
     {
