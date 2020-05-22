@@ -13,7 +13,7 @@ export class AccountContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        email: props.email,
+        username: "Foo",
         newPassword: ""
     }
     this.handleInput = this.handleInput.bind(this);
@@ -37,7 +37,7 @@ export class AccountContent extends Component {
                 <Form onSubmit={this.changePassword}>
                     <Form.Group as={Row}>
                         <Form.Label column sm="2">
-                            Usuario: {this.state.email}
+                            Usuario: {this.state.username}
                         </Form.Label>
                     </Form.Group>
                     <Form.Group as={Row}>
@@ -57,7 +57,6 @@ export class AccountContent extends Component {
         )
     }
 
-<<<<<<< HEAD
     componentDidMount()
     {
         db = firebase.firestore();
@@ -77,23 +76,6 @@ export class AccountContent extends Component {
     //       this.setState({username: username})
     //     });
 
-=======
-    componentDidMount(){
-      db = firebase.firestore();
-      db.collection('Usuarios')
-      .where('email', '==', this.state.email)
-      .get()
-      .then(result => {
-        result.forEach(doc => {
-          console.log(doc.data().nombre)
-          this.setState({
-            email: doc.data().nombre,
-            nombre: doc.data().nombre,
-            tipoExodo: doc.data().tipoExodo
-          })
-        })
-      })
->>>>>>> 12daa323c772bcdb1a6d5c9c1d46f658046fec08
     }
 
     handleInput(event)
