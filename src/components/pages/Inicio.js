@@ -14,7 +14,7 @@ export default function Inicio() {
                 <Jumbotron style={jumbotronStyle}>
                     <h1>MOVIMIENTO ÉXODO</h1>
                     <p>
-                        Somos un grupo formal y dináico, constituido por adolecentes en busca de una formación integral.
+                        Somos un grupo formal y dinámico, constituido por adolecentes en busca de una formación integral.
                     </p>
                     <p>
                         <Link style={linkStyle} to="/nosotros"><Button variant="primary">SOBRE NOSOTROS</Button></Link>
