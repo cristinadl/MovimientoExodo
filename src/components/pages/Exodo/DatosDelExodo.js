@@ -15,11 +15,11 @@ export default class DatosDelExodo extends React.Component {
     this.db = firebase.firestore();
     this.state = {
       email: props.email,
-      nombre: 'Test',
-      lema: '',
-      porra: '',
-      pais: '',
-      estado: '',
+      nombre: props.nombre,
+      lema: props.lema,
+      porra: props.porra,
+      pais: props.pais,
+      estado: props.estado,
       loading: false,
       complete: false
     }
@@ -38,7 +38,13 @@ export default class DatosDelExodo extends React.Component {
         this.setState({
           email: doc.data().nombre,
           nombre: doc.data().nombre,
-          tipoExodo: doc.data().tipoExodo
+          tipoExodo: doc.data().tipoExodo,
+          pais : doc.data().pais,
+          lema : doc.data().lema,
+          porra : doc.data().porra,
+          estado : doc.data().estado,
+          internacional : doc.data().internacional
+          //tribus : doc.data().tribus
         })
       })
     })
@@ -49,18 +55,19 @@ export default class DatosDelExodo extends React.Component {
     // WARNING: Falta editar esta funcion, debe actualizar
       event.preventDefault();
       this.setState({loading: true, complete: false})
-      this.db.collection('Usuarios').add({
-          nombre: this.state.nombre,
-          lema: this.state.lema,
-          porra: this.state.porra,
-          pais: this.state.pais,
-          estado: this.state.estado
-      }).then(() => {
-          console.log('Success'); // Cambiar por feedback al usuario
-          this.setState({loading: false, complete: true})
-      }).catch((error) => {
-          console.log('Error al crear Anuncio'); // Cambiar por feedback al usuario
-      })
+      
+      this.db.collection('Usuarios').doc(this.state.nombre).update({
+        nombre: this.state.nombre,
+        lema: this.state.lema,
+        porra: this.state.porra,
+        pais: this.state.pais,
+        estado: this.state.estado
+    }).then(() => {
+        console.log('Success'); // Cambiar por feedback al usuario
+        this.setState({loading: false, complete: true})
+    }).catch((error) => {
+        console.log('Error al crear Anuncio'); // Cambiar por feedback al usuario
+    })
       event.preventDefault();
   }
 
@@ -76,68 +83,68 @@ export default class DatosDelExodo extends React.Component {
 
   render() {
   return (
-      <Container style={containerParentStyle}>
-        <Card>
-          <Card.Body>
-            <Card.Title>{ this.state.nombre }</Card.Title>
-            <Form onSubmit={this.updateExodo}>
-              // TODO: logo ?
-              <Form.Group as={Row} >
-                <Form.Label column sm="2">
-                  Lema
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control name="lema" placeholder="Lema" onChange={this.handleInput} />
-                </Col>
-              </Form.Group>
-              { typeof this.state.tribus != "undefined" ? this.state.tribus.map((tribu, index) => (
-                <Form.Group as={Row} key={tribu.id}>
-                  <Form.Label column sm="2">
-                    { tribu.name }
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control name="lema" placeholder="Lema" onChange={this.handleInput} />
-                  </Col>
-                </Form.Group>
-              )) : <div>Tribus</div>}
-              <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
-                  <Form.Label column sm="2">
-                      Porra
-                  </Form.Label>
-                  <Col sm="10">
-                      <Form.Control name="porra" as="textarea" rows="4" onChange={this.handleInput} />
-                  </Col>
-              </Form.Group>
-              // TODO: Fotos ?
-              // TODO: Videos ?
-              <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
-                  <Form.Label column sm="2">
-                      País
-                  </Form.Label>
-                  <Col sm="10">
-                      <Form.Control name="pais" placeholder="País" onChange={this.handleInput} />
-                  </Col>
-              </Form.Group>
-              <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
-                  <Form.Label column sm="2">
-                      Estado
-                  </Form.Label>
-                  <Col sm="10">
-                      <Form.Control name="estado" placeholder="Estado" onChange={this.handleInput} />
-                  </Col>
-              </Form.Group>
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check defaultChecked name="tipoInternacional" type="checkbox" label="Internacional" onChange={this.handleChecked}/>
-              </Form.Group>
-              <Button variant="dark" type="submit">
-                  Confirmar
-              </Button>
-              { this.state.loading && <div className='loader center'/>}
-              { this.state.complete && <Alert variant='success' className='center'>Los datos han sido actualizados.</Alert>}
-            </Form>
-          </Card.Body>
-        </Card>
-      </Container>
+    <Container style={containerParentStyle}>
+    <Card>
+      <Card.Body>
+        <Card.Title>{ this.state.nombre }</Card.Title>
+        <Form onSubmit={this.updateExodo}>
+          // TODO: logo ?
+          <Form.Group as={Row} >
+            <Form.Label column sm="2">
+              Lema
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control name="lema" placeholder={this.state.lema} onChange={this.handleInput} />
+            </Col>
+          </Form.Group>
+          { typeof this.state.tribus != "undefined" ? this.state.tribus.map((tribu, index) => (
+            <Form.Group as={Row} key={tribu.id}>
+              <Form.Label column sm="2">
+                { tribu.name }
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control name="lema" placeholder="Lema" onChange={this.handleInput} />
+              </Col>
+            </Form.Group>
+          )) : <div>Tribus</div>}
+          <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
+              <Form.Label column sm="2">
+                  Porra
+              </Form.Label>
+              <Col sm="10">
+                  <Form.Control name="porra" as="textarea" placeholder={this.state.porra} rows="4" onChange={this.handleInput} />
+              </Col>
+          </Form.Group>
+          // TODO: Fotos ?
+          // TODO: Videos ?
+          <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
+              <Form.Label column sm="2">
+                  País
+              </Form.Label>
+              <Col sm="10">
+                  <Form.Control name="pais" placeholder={this.state.pais} onChange={this.handleInput} />
+              </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
+              <Form.Label column sm="2">
+                  Estado
+              </Form.Label>
+              <Col sm="10">
+                  <Form.Control name="estado" placeholder={this.state.estado} onChange={this.handleInput} />
+              </Col>
+          </Form.Group>
+          <Form.Group controlId="formBasicCheckbox">
+            <Form.Check defaultChecked name="tipoInternacional" type="checkbox" label="Internacional" onChange={this.handleChecked}/>
+          </Form.Group>
+          <Button variant="dark" type="submit">
+              Confirmar
+          </Button>
+          { this.state.loading && <div className='loader center'/>}
+          { this.state.complete && <Alert variant='success' className='center'>Los datos han sido actualizados.</Alert>}
+        </Form>
+      </Card.Body>
+    </Card>
+  </Container>
     )
   }
 }
