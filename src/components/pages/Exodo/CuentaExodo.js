@@ -95,12 +95,6 @@ export default class CuentaExodo extends Component {
         )
     }
 
-<<<<<<< HEAD
-    componentDidMount()
-    {
-        db = firebase.firestore();
-        this.signIn('agregional@gmail.com', '123456');
-=======
     componentDidMount(){
       db = firebase.firestore();
       db.collection('Usuarios')
@@ -116,19 +110,18 @@ export default class CuentaExodo extends Component {
           })
         })
       })
->>>>>>> 12daa323c772bcdb1a6d5c9c1d46f658046fec08
     }
 
-    signIn(email, password)  {
-        firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
-            //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
-            console.log(Credential);
-            credential = Credential;
-            this.getProfilePicture(credential.user.uid)
-        }).catch((error) => {
-            console.log(error.message);
-        })
-    }
+    // signIn(email, password)  {
+    //     firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
+    //         //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
+    //         console.log(Credential);
+    //         credential = Credential;
+    //         this.getProfilePicture(credential.user.uid)
+    //     }).catch((error) => {
+    //         console.log(error.message);
+    //     })
+    // }
 
     getProfilePicture(id)
     {

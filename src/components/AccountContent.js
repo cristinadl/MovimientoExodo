@@ -57,11 +57,9 @@ export class AccountContent extends Component {
         )
     }
 
-<<<<<<< HEAD
     componentDidMount()
     {
         db = firebase.firestore();
-        this.signIn('agregional@gmail.com', '123456');
 
         this.render();
     //     var username;
@@ -77,23 +75,6 @@ export class AccountContent extends Component {
     //       this.setState({username: username})
     //     });
 
-=======
-    componentDidMount(){
-      db = firebase.firestore();
-      db.collection('Usuarios')
-      .where('email', '==', this.state.email)
-      .get()
-      .then(result => {
-        result.forEach(doc => {
-          console.log(doc.data().nombre)
-          this.setState({
-            email: doc.data().nombre,
-            nombre: doc.data().nombre,
-            tipoExodo: doc.data().tipoExodo
-          })
-        })
-      })
->>>>>>> 12daa323c772bcdb1a6d5c9c1d46f658046fec08
     }
 
     handleInput(event)
@@ -118,16 +99,16 @@ export class AccountContent extends Component {
         event.preventDefault();
     }
 
-    signIn(email, password)  {
-        firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
-            //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
-            console.log(Credential);
-            credential = Credential;
-            this.getUsername(credential.user.uid)
-        }).catch((error) => {
-            console.log(error.message);
-        })
-    }
+    // signIn(email, password)  {
+    //     firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
+    //         //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
+    //         console.log(Credential);
+    //         credential = Credential;
+    //         this.getUsername(credential.user.uid)
+    //     }).catch((error) => {
+    //         console.log(error.message);
+    //     })
+    // }
 
     getUsername(id)
     {
