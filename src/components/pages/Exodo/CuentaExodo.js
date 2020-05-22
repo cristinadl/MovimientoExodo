@@ -6,33 +6,31 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
-
+ 
 var db;
 var credential;
 var imageJSX = <img src="/Person-02.png" alt="Person-02" height="150" width="150"></img>;
 var username = "";
-
+ 
 export default class CuentaExodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: props.email,
             userHasProfilePic: false,
             username: "",
             profilePic: "",
             invalidFile: true,
-            loadedFile: null,
-            id: props.id
+            loadedFile: null
         }
         this.verifyFile = this.verifyFile.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.toBase64 = this.toBase64.bind(this);
         this.getName = this.getName.bind(this);
       }
-
+ 
     render() {
         return (
-
+ 
             <div>
                 <Col md={2}>
                 <Card>
@@ -41,7 +39,7 @@ export default class CuentaExodo extends Component {
                     }
                 </Card>
                 </Col>
-
+                
                 <Col md={6}>
                 <Card>
                     <Card.Body>
@@ -53,7 +51,7 @@ export default class CuentaExodo extends Component {
                                 {/* <Form.Label column sm="6">
                                     Sube tu foto de perfil.
                                 </Form.Label> */}
-                                <input type="file" class="form-control" accept = ".png, .jpg"
+                                <input type="file" class="form-control" accept = ".png, .jpg" 
                                     multiple="" onChange = {this.verifyFile}></input>
                             </Form.Group>
                             <Button variant="dark" type="submit" disabled={this.state.invalidFile}>
@@ -67,7 +65,7 @@ export default class CuentaExodo extends Component {
                             <form method="post" action="#" id="#">
                                 <div class="form-group files">
                                     <label>Sube tu foto de perfil</label>
-                                    <input type="file" class="form-control" accept = ".png, .jpeg"
+                                    <input type="file" class="form-control" accept = ".png, .jpeg" 
                                     multiple="" onChange = {this.verifyFile}></input>
                                     <button type="submit">Subir</button>
                                 </div>
@@ -87,47 +85,36 @@ export default class CuentaExodo extends Component {
                 </div> */}
                 </Card>
                 </Col>
-
-
-
-                <AccountContent email={this.state.email}></AccountContent>
+ 
+                
+ 
+                <AccountContent></AccountContent>
             </div>
         )
     }
-
-    componentDidMount(){
-      db = firebase.firestore();
-      db.collection('Usuarios')
-      .where('email', '==', this.state.email)
-      .get()
-      .then(result => {
-        result.forEach(doc => {
-          console.log(doc.data().nombre)
-          this.setState({
-            email: doc.data().nombre,
-            nombre: doc.data().nombre,
-            tipoExodo: doc.data().tipoExodo
-          })
-        })
-      })
+ 
+    componentDidMount()
+    {
+        db = firebase.firestore();
+        this.signIn('agregional@gmail.com', '123456');
     }
-
-    // signIn(email, password)  {
-    //     firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
-    //         //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
-    //         console.log(Credential);
-    //         credential = Credential;
-    //         this.getProfilePicture(credential.user.uid)
-    //     }).catch((error) => {
-    //         console.log(error.message);
-    //     })
-    // }
-
+ 
+    signIn(email, password)  {
+        firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
+            //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
+            console.log(Credential);
+            credential = Credential;
+            this.getProfilePicture(credential.user.uid)
+        }).catch((error) => {
+            console.log(error.message);
+        })
+    }
+ 
     getProfilePicture(id)
     {
         db = firebase.firestore();
         var image;
-
+ 
         db.collection('Usuarios').where("userId", "==", id)
         .get() // Metodo de Firebase para obtener los datos
         .then((Snap) => {
@@ -135,21 +122,21 @@ export default class CuentaExodo extends Component {
             image = user.data().imagenPerfil.imagen
             console.log(user.data().imagenPerfil.imagen);
             });
-
+ 
             if(image.startsWith("data:image/"))
             {
                 imageJSX = <img src={image} alt = "Profile"/>
                 this.setState({profilePic: image, userHasProfilePic: true})
             }
-
+          
         });
     }
-
+ 
     getName(uid)
     {
         return new Promise((resolve, reject) => {
             var name;
-
+ 
             db.collection('Usuarios').where("userId", "==", uid)
             .get() // Metodo de Firebase para obtener los datos
             .then((Snap) => {
@@ -163,13 +150,13 @@ export default class CuentaExodo extends Component {
             });
         })
     }
-
+ 
     verifyFile(event)
     {
         var file = event.target.files[0];
-
+ 
         console.log(file);
-
+ 
         if(!file.name.match(/.(jpg|png)$/i))
         {
             this.setState({invalidFile: true})
@@ -178,20 +165,20 @@ export default class CuentaExodo extends Component {
         {
             this.setState({invalidFile: false})
         }
-
+ 
         this.setState({loadedFile: file})
     }
-
+ 
     async uploadFile(event)
     {
         event.preventDefault();
         var data;
-
+ 
         this.toBase64((result) => {
             data = result;
             console.log(data);
         });
-
+ 
         //firebase.database().ref("Usuarios/" + credential.user.uid).set({nombre: "agre"})
         console.log("s");
         console.log(firebase.auth().currentUser.uid);
@@ -209,7 +196,7 @@ export default class CuentaExodo extends Component {
             console.error("Error writing document: ", error);
         });
     }
-
+ 
     toBase64(cb) {
         let reader = new FileReader();
         console.log("64")
