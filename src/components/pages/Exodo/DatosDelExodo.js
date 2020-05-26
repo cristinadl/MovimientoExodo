@@ -9,6 +9,8 @@ import { Container } from 'reactstrap'
 import '../loader.css';
 import * as firebase from 'firebase'
 
+var skip = true;
+
 export default class DatosDelExodo extends React.Component {
   constructor(props) {
     super(props);
@@ -20,11 +22,17 @@ export default class DatosDelExodo extends React.Component {
       porra: props.porra,
       pais: props.pais,
       estado: props.estado,
+      logo: props.logo,
+      fotos: props.fotos,
       loading: false,
-      complete: false
+      complete: false,
+      invalidLogo: true,
+      invalidPhotos:true,
     }
     this.updateExodo = this.updateExodo.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.verifyLogo = this.verifyLogo.bind(this);
+    this.verifyPhotos = this.verifyPhotos.bind(this);
   }
 
   componentDidMount() {
@@ -36,13 +44,15 @@ export default class DatosDelExodo extends React.Component {
       result.forEach(doc => {
         console.log(doc.data().nombre)
         this.setState({
-          email: doc.data().nombre,
+          email: doc.data().email,
           nombre: doc.data().nombre,
           tipoExodo: doc.data().tipoExodo,
           pais : doc.data().pais,
           lema : doc.data().lema,
           porra : doc.data().porra,
           estado : doc.data().estado,
+          logo : doc.data().logo,
+          fotos : doc.data().fotos,
           internacional : doc.data().internacional
           //tribus : doc.data().tribus
         })
@@ -61,7 +71,9 @@ export default class DatosDelExodo extends React.Component {
         lema: this.state.lema,
         porra: this.state.porra,
         pais: this.state.pais,
-        estado: this.state.estado
+        estado: this.state.estado,
+        logo: this.state.logo,
+        fotos: this.state.fotos
     }).then(() => {
         console.log('Success'); // Cambiar por feedback al usuario
         this.setState({loading: false, complete: true})
@@ -88,7 +100,14 @@ export default class DatosDelExodo extends React.Component {
       <Card.Body>
         <Card.Title>{ this.state.nombre }</Card.Title>
         <Form onSubmit={this.updateExodo}>
-          // TODO: logo ?
+          <Form.Group as={Row}>
+            <Form.Label column sm="2">
+              Logo
+            </Form.Label>
+            <Col sm="10">
+              <input type="file" class="form-control" accept = ".png, .jpg" multiple="" onChange = {this.verifyLogo}></input>
+            </Col>
+          </Form.Group>
           <Form.Group as={Row} >
             <Form.Label column sm="2">
               Lema
@@ -115,7 +134,14 @@ export default class DatosDelExodo extends React.Component {
                   <Form.Control name="porra" as="textarea" placeholder={this.state.porra} rows="4" onChange={this.handleInput} />
               </Col>
           </Form.Group>
-          // TODO: Fotos ?
+          <Form.Group as={Row}>
+            <Form.Label column sm="2">
+              Fotos
+            </Form.Label>
+            <Col sm="10">
+              <input type="file" class="form-control" accept = ".png, .jpg" multiple={true} onChange = {this.verifyPhotos}></input>
+            </Col>
+          </Form.Group>
           // TODO: Videos ?
           <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
               <Form.Label column sm="2">
@@ -136,7 +162,7 @@ export default class DatosDelExodo extends React.Component {
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check defaultChecked name="tipoInternacional" type="checkbox" label="Internacional" onChange={this.handleChecked}/>
           </Form.Group>
-          <Button variant="dark" type="submit">
+          <Button variant="dark" type="submit" disabled = {this.state.invalidLogo}>
               Confirmar
           </Button>
           { this.state.loading && <div className='loader center'/>}
@@ -146,6 +172,62 @@ export default class DatosDelExodo extends React.Component {
     </Card>
   </Container>
     )
+  }
+
+  async verifyLogo(event)
+  {
+        var file = event.target.files[0];
+ 
+        if(!file.name.match(/.(jpg|png)$/i))
+        {
+            this.setState({invalidLogo: true})
+            return;
+        }
+        else
+        {
+            this.setState({invalidLogo: false, loadedLogoFile: file})
+        }
+ 
+        this.getBase64(file, (result) => {
+          this.setState({logo: result});
+     });
+  }
+
+  async verifyPhotos(event)
+  {
+    var files = event.target.files;
+ 
+    var i;
+
+    var fotos = this.state.fotos;
+    for(i = 0; i < files.length; i++)
+    {
+      if(!files[i].name.match(/.(jpg|png)$/i))
+      {
+        this.setState({invalidPhotos: true});
+
+        return;
+      }
+      else
+      {
+        this.getBase64(files[i], (result) => {
+          fotos.push(result);
+        });
+      }
+    }
+
+      this.setState({invalidPhotos: false, fotos: fotos})
+  }
+
+  getBase64(file, cb) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result)
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
   }
 }
 

@@ -34,23 +34,15 @@ export default class CuentaExodo extends Component {
             <div>
                 <Col md={2}>
                 <Card>
-                    {
-                        imageJSX
-                    }
+                    { imageJSX }
                 </Card>
                 </Col>
                 
                 <Col md={6}>
                 <Card>
                     <Card.Body>
-                            {/* <Card.Text column sm = "10" style={{textAlign: 'left'}}>
-                                <p>Usuario: {this.state.username}</p>
-                            </Card.Text> */}
                         <Form onSubmit={this.uploadFile}>
                             <Form.Group as={Row}>
-                                {/* <Form.Label column sm="6">
-                                    Sube tu foto de perfil.
-                                </Form.Label> */}
                                 <input type="file" class="form-control" accept = ".png, .jpg" 
                                     multiple="" onChange = {this.verifyFile}></input>
                             </Form.Group>
@@ -59,35 +51,9 @@ export default class CuentaExodo extends Component {
                             </Button>
                         </Form>
                     </Card.Body>
-                {/* <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <form method="post" action="#" id="#">
-                                <div class="form-group files">
-                                    <label>Sube tu foto de perfil</label>
-                                    <input type="file" class="form-control" accept = ".png, .jpeg" 
-                                    multiple="" onChange = {this.verifyFile}></input>
-                                    <button type="submit">Subir</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div> */}
-                {/* <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01"
-                        aria-describedby="inputGroupFileAddon01"/>
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                    </div>
-                </div> */}
                 </Card>
                 </Col>
- 
-                
- 
+
                 <AccountContent></AccountContent>
             </div>
         )
@@ -126,7 +92,7 @@ export default class CuentaExodo extends Component {
  
             if(image.startsWith("data:image/"))
             {
-                imageJSX = <img src={image} alt = "Profile"/>
+                imageJSX = <img src={image} alt = "Profile" height="150" width="150"/>
                 this.setState({profilePic: image, userHasProfilePic: true})
             }
           
