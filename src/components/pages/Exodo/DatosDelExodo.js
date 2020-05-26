@@ -26,8 +26,8 @@ export default class DatosDelExodo extends React.Component {
       fotos: props.fotos,
       loading: false,
       complete: false,
-      invalidLogo: true,
-      invalidPhotos:true,
+      invalidLogo: false,
+      invalidPhotos:false,
     }
     this.updateExodo = this.updateExodo.bind(this);
     this.handleInput = this.handleInput.bind(this);
