@@ -21,9 +21,10 @@ export default class DatosDelExodo extends React.Component {
       lema: props.lema,
       porra: props.porra,
       pais: props.pais,
-      estado: props.estado,
+      estado: props.Estado,
       logo: props.logo,
       fotos: props.fotos,
+      tipoInternacional: props.internacional,
       loading: false,
       complete: false,
       invalidLogo: false,
@@ -31,6 +32,7 @@ export default class DatosDelExodo extends React.Component {
     }
     this.updateExodo = this.updateExodo.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleChecked= this.handleChecked.bind(this);
     this.verifyLogo = this.verifyLogo.bind(this);
     this.verifyPhotos = this.verifyPhotos.bind(this);
   }
@@ -50,10 +52,10 @@ export default class DatosDelExodo extends React.Component {
           pais : doc.data().pais,
           lema : doc.data().lema,
           porra : doc.data().porra,
-          estado : doc.data().estado,
+          estado : doc.data().Estado,
           logo : doc.data().logo,
           fotos : doc.data().fotos,
-          internacional : doc.data().internacional
+          tipoInternacional : doc.data().Internacional
           //tribus : doc.data().tribus
         })
       })
@@ -65,15 +67,16 @@ export default class DatosDelExodo extends React.Component {
     // WARNING: Falta editar esta funcion, debe actualizar
       event.preventDefault();
       this.setState({loading: true, complete: false})
-      
+      console.log(this.state.tipoInternacional)
       this.db.collection('Usuarios').doc(this.state.nombre).update({
         nombre: this.state.nombre,
         lema: this.state.lema,
         porra: this.state.porra,
         pais: this.state.pais,
-        estado: this.state.estado,
+        Estado: this.state.estado,
         logo: this.state.logo,
-        fotos: this.state.fotos
+        fotos: this.state.fotos,
+        Internacional: this.state.tipoInternacional
     }).then(() => {
         console.log('Success'); // Cambiar por feedback al usuario
         this.setState({loading: false, complete: true})
@@ -93,6 +96,10 @@ export default class DatosDelExodo extends React.Component {
     });
   }
 
+  handleChecked(event) {
+    this.setState({tipoInternacional: !this.state.tipoInternacional});
+  }
+
   render() {
   return (
     <Container style={containerParentStyle}>
@@ -105,7 +112,7 @@ export default class DatosDelExodo extends React.Component {
               Logo
             </Form.Label>
             <Col sm="10">
-              <input type="file" class="form-control" accept = ".png, .jpg" multiple="" onChange = {this.verifyLogo}></input>
+              <input type="file" className="form-control" accept = ".png, .jpg" multiple="" onChange = {this.verifyLogo}></input>
             </Col>
           </Form.Group>
           <Form.Group as={Row} >
@@ -113,7 +120,7 @@ export default class DatosDelExodo extends React.Component {
               Lema
             </Form.Label>
             <Col sm="10">
-              <Form.Control name="lema" placeholder={this.state.lema} onChange={this.handleInput} />
+              <Form.Control name="lema" defaultValue={this.state.lema} onChange={this.handleInput} />
             </Col>
           </Form.Group>
           { typeof this.state.tribus != "undefined" ? this.state.tribus.map((tribu, index) => (
@@ -131,7 +138,7 @@ export default class DatosDelExodo extends React.Component {
                   Porra
               </Form.Label>
               <Col sm="10">
-                  <Form.Control name="porra" as="textarea" placeholder={this.state.porra} rows="4" onChange={this.handleInput} />
+                  <Form.Control name="porra" as="textarea" defaultValue={this.state.porra} rows="4" onChange={this.handleInput} />
               </Col>
           </Form.Group>
           <Form.Group as={Row}>
@@ -139,7 +146,7 @@ export default class DatosDelExodo extends React.Component {
               Fotos
             </Form.Label>
             <Col sm="10">
-              <input type="file" class="form-control" accept = ".png, .jpg" multiple={true} onChange = {this.verifyPhotos}></input>
+              <input type="file" className="form-control" accept = ".png, .jpg" multiple={true} onChange = {this.verifyPhotos}></input>
             </Col>
           </Form.Group>
           // TODO: Videos ?
@@ -148,7 +155,7 @@ export default class DatosDelExodo extends React.Component {
                   País
               </Form.Label>
               <Col sm="10">
-                  <Form.Control name="pais" placeholder={this.state.pais} onChange={this.handleInput} />
+                  <Form.Control name="pais" defaultValue={this.state.pais} onChange={this.handleInput} />
               </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
@@ -156,11 +163,11 @@ export default class DatosDelExodo extends React.Component {
                   Estado
               </Form.Label>
               <Col sm="10">
-                  <Form.Control name="estado" placeholder={this.state.estado} onChange={this.handleInput} />
+                  <Form.Control name="estado" defaultValue={this.state.estado} onChange={this.handleInput} />
               </Col>
           </Form.Group>
           <Form.Group controlId="formBasicCheckbox">
-            <Form.Check defaultChecked name="tipoInternacional" type="checkbox" label="Internacional" onChange={this.handleChecked}/>
+            <Form.Check defaultChecked={this.state.tipoInternacional} name="tipoInternacional" type="checkbox" label="Internacional" onChange={this.handleChecked}/>
           </Form.Group>
           <Button variant="dark" type="submit" disabled = {this.state.invalidLogo}>
               Confirmar
@@ -177,7 +184,7 @@ export default class DatosDelExodo extends React.Component {
   async verifyLogo(event)
   {
         var file = event.target.files[0];
- 
+
         if(!file.name.match(/.(jpg|png)$/i))
         {
             this.setState({invalidLogo: true})
@@ -187,7 +194,7 @@ export default class DatosDelExodo extends React.Component {
         {
             this.setState({invalidLogo: false, loadedLogoFile: file})
         }
- 
+
         this.getBase64(file, (result) => {
           this.setState({logo: result});
      });
@@ -196,7 +203,7 @@ export default class DatosDelExodo extends React.Component {
   async verifyPhotos(event)
   {
     var files = event.target.files;
- 
+
     var i;
 
     var fotos = this.state.fotos;
