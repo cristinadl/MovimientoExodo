@@ -97,6 +97,7 @@ export default class Exodos extends Component {
           exodos.push({
             id: exodo.ref.id,
             nombre: exodo.data().nombre,
+            internacional: exodo.data().Internacional,
             logo: logo
           });
         });
@@ -128,13 +129,13 @@ export default class Exodos extends Component {
           :
           this.state.loading ? <div className='loader center' /> :
             <div>
-              <Card Row>
+              <Card>
                 <Card.Body>
                   <Card.Title> Internacional </Card.Title>
                   <CardGroup>{this.state.internacional.map((exodo, index) => (<Exodo className='exodo' exodo={exodo} key={exodo.id} selectExodo={() => this.selectExodo(exodo.id)}></Exodo>))}</CardGroup>
                 </Card.Body>
               </Card>
-              <Card Row>
+              <Card>
                 <Card.Body>
                   <Card.Title>Local</Card.Title>
                   <CardGroup>{this.state.local.map((exodo, index) => (<Exodo className='exodo' exodo={exodo} key={exodo.id} selectExodo={() => this.selectExodo(exodo.id)}></Exodo>))}</CardGroup>
