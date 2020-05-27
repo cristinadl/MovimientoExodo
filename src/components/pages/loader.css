@@ -23,3 +23,8 @@
   height: 20px;
   float: right;
 }
+
+.display-linebreak {
+  white-space: pre-line;
+}
+

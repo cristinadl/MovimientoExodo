@@ -1,12 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 import Card from 'react-bootstrap/Card'
 import CardColumns from 'react-bootstrap/CardDeck'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
-import Figure from 'react-bootstrap/Figure'
 
 export default function NuestrosValores() {
     return (

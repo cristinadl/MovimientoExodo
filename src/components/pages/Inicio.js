@@ -87,8 +87,6 @@ export default function Inicio() {
                     </p>
                 </Alert>
                 <div>
-                    <h3></h3>
-
                 </div>
             </Card.Body>
         </Card >

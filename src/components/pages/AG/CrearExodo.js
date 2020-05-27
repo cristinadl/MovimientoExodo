@@ -112,10 +112,7 @@ export default class CrearExodo extends React.Component {
                         },
                         Telefono: " "
                     },
-                    imagenPerfil: {
-                      imagen: " ",
-                      tipo: " "
-                    },
+                    imagenPerfil: " ",
                     tribus: {
                         Levi: " ",
                         Juda: " ",
@@ -123,6 +120,8 @@ export default class CrearExodo extends React.Component {
                         Simeon: " "
                     },
                     email: newUser.email,
+                    historia: ' ',
+                    sabiasQue: ' ',
                     userId
                 }
             } else {
@@ -136,10 +135,7 @@ export default class CrearExodo extends React.Component {
                         },
                         Telefono: " "
                     },
-                    imagenPerfil: {
-                      imagen: " ",
-                      tipo: " "
-                    },
+                    imagenPerfil: " ",
                     email: newUser.email,
                     userId
                 };
