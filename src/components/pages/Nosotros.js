@@ -25,7 +25,10 @@ export default class Nosotros extends Component {
     getMapSize(x) {
         var len = 0;
         for (var count in x) {
-                len++;
+            if(count == null) {
+                console.log("No debe hacer nada");
+            }
+            len++;
         }
     
         return len;

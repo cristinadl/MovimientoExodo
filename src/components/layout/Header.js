@@ -38,7 +38,7 @@ const headerStyle = {
     padding: '10px'
 }
 
-const linkStyle = {
-    color: '#fff',
-    textDecoration: 'none'
-}
+// const linkStyle = {
+//     color: '#fff',
+//     textDecoration: 'none'
+// }

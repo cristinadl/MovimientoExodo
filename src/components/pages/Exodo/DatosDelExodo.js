@@ -9,7 +9,7 @@ import { Container } from 'reactstrap'
 import '../loader.css';
 import * as firebase from 'firebase'
 
-var skip = true;
+//var skip = true;
 
 export default class DatosDelExodo extends React.Component {
   constructor(props) {

@@ -1,5 +1,6 @@
 import React from 'react'
-import { Container, Row, Col } from 'reactstrap';
+//import { Container, Row, Col } from 'reactstrap';
+import { Container, Row } from 'reactstrap';
 import Card from 'react-bootstrap/Card'
 import CardColumns from 'react-bootstrap/CardDeck'
 import Jumbotron from 'react-bootstrap/Jumbotron'
@@ -128,13 +129,13 @@ const valorFisico = "Forma parte de este valor todo aquello que impulse y ayude 
 const valorTecnico = "Este valor comprende el manejo de un conjunto de conocimientos, procedimientos y habilidades de que se vale la ciencia y el arte .Buscamos desarrollar la habilidad de aplicar adecuadamente de esos recursos para responder a las situaciones mas diversas que se pueden presentar. Aquí integramos actividades del escultismo que nos ayudan."
 const valorPsico = "Este valor busca propiciar el conocimiento, aceptación y desarrollo de nuestra persona, a fin de liberarnos de los obstáculos que impiden comprendernos a nosotros y a los demás. Impulsa el desarrollo de tus capacidades de relación serena y franca con los demás."
 const valorCultral = "Busca fomentar una actitud positiva, que valora, asume, promueve el conocimiento y aprecio de nuestras raíces culturales, la apreciación de las distintas expresiones culturales contemporáneas como el teatro, cine, pintura, televisión, etc. Buscando tener una visión crítica hacia todos ellos."
-const valorReligioso = "En Exodo tenemos como base de los demás valores al valor religioso; constantemente se habla de lo que Jesús nos pide, de las místicas que representan actitudes de Cristo, y del amor que Dios nos tiene. La mística del grupo, habla de la esclavitud de un pueblo, que fue llamado por Dios a caminar, a ser libre y a buscar la tierra prometida, que en Jesús se transforma en el Reino de Dios. El cultivar este valor evita que Exodo se convierta en una guardería o en un grupo social."
+//const valorReligioso = "En Exodo tenemos como base de los demás valores al valor religioso; constantemente se habla de lo que Jesús nos pide, de las místicas que representan actitudes de Cristo, y del amor que Dios nos tiene. La mística del grupo, habla de la esclavitud de un pueblo, que fue llamado por Dios a caminar, a ser libre y a buscar la tierra prometida, que en Jesús se transforma en el Reino de Dios. El cultivar este valor evita que Exodo se convierta en una guardería o en un grupo social."
 
 
-const linkStyle = {
-    color: '#000',
-    textDecoration: 'none'
-}
+// const linkStyle = {
+//     color: '#000',
+//     textDecoration: 'none'
+// }
 
 const jumbotronStyle = {
     background: 'url(http://movimientoexodo.com/wp-content/uploads/2014/07/teenprayer.jpg) no-repeat center',

@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
  
 var db;
-var credential;
+//var credential;
 var imageJSX = <img src="/Person-02.png" alt="Person-02" height="150" width="150"></img>;
 var username = "";
  
