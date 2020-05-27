@@ -2,7 +2,7 @@
   "name": "movimiento_exodo",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://young-sierra-31586.herokuapp.com/",
   "engines": {
     "npm": "6.12.0",
     "node": "12.3.0"
