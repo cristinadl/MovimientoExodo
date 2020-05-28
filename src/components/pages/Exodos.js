@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'reactstrap'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Image from 'react-bootstrap/Image'
 import './loader.css';
-
+import Button from 'react-bootstrap/Button'
 
 import * as firebase from 'firebase'
 import Figure from 'react-bootstrap/Figure';
@@ -71,10 +71,11 @@ function ExodoData(props) {
                 </Figure>
               </Col>
             </Row>
-            <hr></hr> 
+            <hr></hr>
             <Row className="justify-content-md-center">
               <h4 >TRIBUS QUE NOS CONFORMAN</h4>
             </Row>
+            <Button variant="secondary" onClick={props.resetExodo}>Regresar a todos los Éxodos</Button>
           </Container>
         </Jumbotron>
       </Card>
@@ -128,15 +129,13 @@ export default class Exodos extends Component {
   }
 
   selectExodo(id) {
-    console.log('update')
-    console.log(id)
     this.setState(
       { exodo_id: id }
     )
   }
 
   resetExodo() {
-    this.updateState(null)
+    this.setState({exodo_id: null})
   }
 
   render() {
@@ -144,7 +143,7 @@ export default class Exodos extends Component {
     return (
       <div className='exodos' ref={this.exodos}>
         {this.state.exodo_id ?
-          <ExodoData exodo={this.state.exodos.filter(function (exodo) { return exodo.id === current_id })[0]}></ExodoData>
+          <ExodoData resetExodo={() => this.resetExodo()} exodo={this.state.exodos.filter(function (exodo) { return exodo.id === current_id })[0]}></ExodoData>
           :
           this.state.loading ? <div className='loader center' /> :
             <div>
