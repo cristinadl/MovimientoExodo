@@ -104,7 +104,7 @@ export default class CrearExodo extends React.Component {
                     porra: " ",
                     cantidadExoditos: 0,
                     nombreDeGrupo: " ",
-                    Pais: " ",
+                    pais: " ",
                     tipoExodo: true,
                     Contacto: {
                         RedesSociales: {
@@ -123,6 +123,7 @@ export default class CrearExodo extends React.Component {
                     email: newUser.email,
                     historia: ' ',
                     sabiasQue: ' ',
+                    lema: ' ',
                     userId
                 }
             } else {
