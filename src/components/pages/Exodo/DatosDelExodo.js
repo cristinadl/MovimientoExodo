@@ -31,6 +31,7 @@ export default class DatosDelExodo extends React.Component {
       tipoInternacional: props.internacional,
       loading: false,
       complete: false,
+      error: false,
       invalidLogo: false,
       invalidPhotos:false,
     }
@@ -100,6 +101,7 @@ export default class DatosDelExodo extends React.Component {
         this.setState({loading: false, complete: true})
     }).catch((error) => {
         console.log('Error al actualizar exodo'); // Cambiar por feedback al usuario
+        this.setState({loading: false, error:true})
     })
       event.preventDefault();
   }
@@ -226,6 +228,7 @@ export default class DatosDelExodo extends React.Component {
           </Button>
           { this.state.loading && <div className='loader center'/>}
           { this.state.complete && <Alert variant='success' className='center'>Los datos han sido actualizados.</Alert>}
+          { this.state.error && <Alert variant='danger' className='center'>Error al actualizar, comuníquese con el administrador.</Alert>}
         </Form>
       </Card.Body>
     </Card>
