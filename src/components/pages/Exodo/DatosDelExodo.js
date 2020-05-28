@@ -221,7 +221,7 @@ export default class DatosDelExodo extends React.Component {
               </Col>
           </Form.Group>
           <Form.Group controlId="formBasicCheckbox">
-            <Form.Check defaultChecked={this.state.tipoInternacional} name="tipoInternacional" type="checkbox" label="Internacional" onChange={this.handleChecked}/>
+            <Form.Check checked={this.state.tipoInternacional} name="tipoInternacional" type="checkbox" label="Internacional" onChange={this.handleChecked}/>
           </Form.Group>
           <Button variant="dark" type="submit" disabled = {this.state.invalidLogo}>
               Confirmar
