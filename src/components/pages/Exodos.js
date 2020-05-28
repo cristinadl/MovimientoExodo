@@ -8,6 +8,7 @@ import './loader.css';
 
 
 import * as firebase from 'firebase'
+import 'firebase/auth';
 import Figure from 'react-bootstrap/Figure';
 
 var db;

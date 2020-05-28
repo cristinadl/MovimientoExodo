@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import { Container } from 'reactstrap'
 import * as firebase from 'firebase'
+import 'firebase/auth';
 import './loader.css';
 import Alert from 'react-bootstrap/Alert'
 

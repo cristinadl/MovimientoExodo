@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row'
 import Alert from 'react-bootstrap/Alert'
 import { Container } from 'reactstrap'
 import * as firebase from 'firebase'
+import 'firebase/auth';
 import '../loader.css';
 
 var config = {

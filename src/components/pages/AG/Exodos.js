@@ -5,6 +5,7 @@ import CardGroup from 'react-bootstrap/CardGroup'
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image'
 import * as firebase from 'firebase'
+import 'firebase/auth';
 
 var db;
 
