@@ -117,7 +117,7 @@ export default class Exodos extends Component {
             porra: exodo.data().porra,
             historia: exodo.data().historia,
             sabiasQue: exodo.data().sabiasQue,
-            lema : exodo.lema,
+            lema : exodo.data().lema,
             logo: logo
           });
         });

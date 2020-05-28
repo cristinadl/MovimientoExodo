@@ -25,6 +25,7 @@ export default class DatosDelExodo extends React.Component {
       logo: props.logo,
       fotos: props.fotos,
       historia: props.historia,
+      cantidadExoditos: props.cantidadExoditos,
       nombreDeGrupo : props.nombreDeGrupo,
       sabiasQue: props.sabiasQue,
       tipoInternacional: props.internacional,
@@ -61,6 +62,7 @@ export default class DatosDelExodo extends React.Component {
           porra : doc.data().porra,
           estado : doc.data().Estado,
           historia : doc.data().historia,
+          cantidadExoditos : doc.data().cantidadExoditos,
           nombreDeGrupo : doc.data().nombreDeGrupo,
           sabiasQue : doc.data().sabiasQue,
           logo : logo,
@@ -88,6 +90,7 @@ export default class DatosDelExodo extends React.Component {
         porra: this.state.porra,
         pais: this.state.pais,
         historia: this.state.historia,
+        cantidadExoditos: Number(this.state.cantidadExoditos),
         nombreDeGrupo : this.state.nombreDeGrupo,
         sabiasQue: this.state.sabiasQue,
         Estado: this.state.estado,
@@ -140,6 +143,12 @@ export default class DatosDelExodo extends React.Component {
             </Form.Label>
             <Col sm="10">
               <Form.Control name="nombreDeGrupo" defaultValue={this.state.nombreDeGrupo} onChange={this.handleInput} />
+            </Col>
+            <Form.Label column sm="2">
+              Cantidad de exoditos
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control name="cantidadExoditos" defaultValue={this.state.cantidadExoditos} onChange={this.handleInput} />
             </Col>
           </Form.Group>
           <Form.Group as={Row} >

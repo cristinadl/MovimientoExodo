@@ -18,7 +18,7 @@ export default class DetalleExodo extends Component {
       email: '',
       nombre: '',
       tipoExodo: true,
-      contrasena: '',
+      //contrasena: '',
       loading: true,
       uploading: false,
       complete: false
@@ -124,6 +124,7 @@ export default class DetalleExodo extends Component {
                       <Form.Control name="nombre" value={this.state.nombre} onChange={this.handleInput} />
                     </Col>
                   </Form.Group>
+                  {/* // TODO(): Poder realizar estos cambios también en auth.
                   <Form.Group as={Row} >
                     <Form.Label column sm="2">
                       email
@@ -140,6 +141,7 @@ export default class DetalleExodo extends Component {
                       <Form.Control type="password" name="contrasena" value={this.state.contrasena} onChange={this.handleInput} />
                     </Col>
                   </Form.Group>
+                  */}
                     <Form.Group controlId="formBasicCheckbox">
                       <Form.Check defaultChecked={this.state.tipoExodo} name="tipoExodo" type="checkbox" label="Tipo Exodo" onChange={this.toggleChange}/>
                     </Form.Group>
