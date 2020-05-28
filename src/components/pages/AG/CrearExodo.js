@@ -123,6 +123,7 @@ export default class CrearExodo extends React.Component {
                     email: newUser.email,
                     historia: ' ',
                     sabiasQue: ' ',
+                    lema: ' ',
                     userId
                 }
             } else {
