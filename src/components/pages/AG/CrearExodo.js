@@ -23,7 +23,7 @@ var config = {
 var secondaryApp = firebase.initializeApp(config, "Secondary");
 
 const isEmail = (email) =>{
-  const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (email.match(regEx)) return true;
   else return false;
 }
@@ -75,7 +75,8 @@ export default class CrearExodo extends React.Component {
       if(Object.keys(errors).length > 0) return
 
       //TODO: Validar data
-      let token, userId, userCredentials;
+      //let token, userId, userCredentials;
+      let userId, userCredentials;
       firebase.firestore().doc(`/Usuarios/${newUser.handle}`).get()
         .then(doc =>{
             if(doc.exists){
@@ -91,7 +92,7 @@ export default class CrearExodo extends React.Component {
             return data.user.getIdToken();
         })
         .then(tokenId => {
-            token = tokenId;
+            //token = tokenId;
             if(newUser.tipoExodo){
                 userCredentials = {
                     nombre: newUser.handle,
@@ -112,10 +113,7 @@ export default class CrearExodo extends React.Component {
                         },
                         Telefono: " "
                     },
-                    imagenPerfil: {
-                      imagen: " ",
-                      tipo: " "
-                    },
+                    imagenPerfil: " ",
                     tribus: {
                         Levi: " ",
                         Juda: " ",
@@ -123,6 +121,8 @@ export default class CrearExodo extends React.Component {
                         Simeon: " "
                     },
                     email: newUser.email,
+                    historia: ' ',
+                    sabiasQue: ' ',
                     userId
                 }
             } else {
@@ -136,10 +136,7 @@ export default class CrearExodo extends React.Component {
                         },
                         Telefono: " "
                     },
-                    imagenPerfil: {
-                      imagen: " ",
-                      tipo: " "
-                    },
+                    imagenPerfil: " ",
                     email: newUser.email,
                     userId
                 };

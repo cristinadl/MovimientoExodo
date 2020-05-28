@@ -20,6 +20,12 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+// TODO(): esta dando un warning esta file:
+//         Cannot update during an existing state transition (such as within `render`). 
+//         Render methods should be a pure function of props and state.
+//         in App (at src/index.js:25)
+//         in StrictMode (at src/index.js:24)
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

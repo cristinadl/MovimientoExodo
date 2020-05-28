@@ -82,13 +82,8 @@ export default function Inicio() {
                         {uneteExodo}
                     </p>
                     <hr />
-                    <p className="mb-0">
-                        <Button variant="outline-primary">CONTACTO</Button>
-                    </p>
                 </Alert>
                 <div>
-                    <h3></h3>
-
                 </div>
             </Card.Body>
         </Card >

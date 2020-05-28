@@ -11,9 +11,7 @@ export default function Footer() {
                     <Col>
                         <p><Link style = {linkStyle} to = "/nosotros">Sobre Nosotros</Link></p>
                         <p><Link style = {linkStyle} to = "/nuestros-valores">Nuestros Valores</Link></p>
-                        <p>Materiales de Apoyo</p>
-                        <p>Grupos Éxodo</p>
-                        <p>Grupos Internacionales</p>
+                        <p><Link style = {linkStyle} to = "/exodos">Grupos Exodo</Link></p>
                     </Col>
                     <Col>
                         <h3>¡CONTÁCTANOS!</h3>

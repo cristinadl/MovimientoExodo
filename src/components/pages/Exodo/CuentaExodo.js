@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
  
 var db;
-var credential;
+//var credential;
 var imageJSX = <img src="/Person-02.png" alt="Person-02" height="150" width="150"></img>;
 var username = "";
  
@@ -86,8 +86,8 @@ export default class CuentaExodo extends Component {
         .get() // Metodo de Firebase para obtener los datos
         .then((Snap) => {
             Snap.forEach(function(user) {
-            image = user.data().imagenPerfil.imagen
-            console.log(user.data().imagenPerfil.imagen);
+            image = user.data().imagenPerfil
+            console.log(user.data().imagenPerfil);
             });
  
             if(image.startsWith("data:image/"))
@@ -154,7 +154,7 @@ export default class CuentaExodo extends Component {
         username = await this.getName(uid);
         console.log(username);
         db.collection("Usuarios").doc(username).update({
-            imagenPerfil: {imagen: data}
+            imagenPerfil: data
         })
         .then(function() {
             console.log("Document successfully written!");
