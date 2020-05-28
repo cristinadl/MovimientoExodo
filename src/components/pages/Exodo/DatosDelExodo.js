@@ -51,9 +51,9 @@ export default class DatosDelExodo extends React.Component {
     .get()
     .then(result => {
       result.forEach(doc => {
-        console.log(doc.data().nombre)
         doc.data().logo !== ' ' ? logo = doc.data().logo : logo = logoDefault
         this.setState({
+          id: doc.id,
           email: doc.data().email,
           nombre: doc.data().nombre,
           tipoExodo: doc.data().tipoExodo,
@@ -80,11 +80,9 @@ export default class DatosDelExodo extends React.Component {
     // WARNING: Falta editar esta funcion, debe actualizar
       event.preventDefault();
       this.setState({loading: true, complete: false})
-      console.log(this.state.tipoInternacional)
       var fotos = [];
       this.state.fotos.length > 0 ? fotos = this.state.fotos : fotos = this.state.fotosExist
-      
-      this.db.collection('Usuarios').doc(this.state.nombre).update({
+      this.db.collection('Usuarios').doc(this.state.id).update({
         nombre: this.state.nombre,
         lema: this.state.lema,
         porra: this.state.porra,
@@ -101,7 +99,7 @@ export default class DatosDelExodo extends React.Component {
         console.log('Success'); // Cambiar por feedback al usuario
         this.setState({loading: false, complete: true})
     }).catch((error) => {
-        console.log('Error al crear Anuncio'); // Cambiar por feedback al usuario
+        console.log('Error al actualizar exodo'); // Cambiar por feedback al usuario
     })
       event.preventDefault();
   }
@@ -120,7 +118,7 @@ export default class DatosDelExodo extends React.Component {
     this.setState({tipoInternacional: !this.state.tipoInternacional});
   }
 
-  // TODO(Ali): el checkbox no jala cuando le das deseleccionar, sigue guardando como si estuviera seleccionado. 
+  // TODO(Ali): el checkbox no jala cuando le das deseleccionar, sigue guardando como si estuviera seleccionado.
 
   render() {
   return (
