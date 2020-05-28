@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 export default function ExodoHeader() {
     return (
         <header style={headerStyle}>
-            <Navbar bg="dark" variant="dark">
+            <Navbar bg="dark" variant="dark" expand="lg">
                 <Navbar.Brand as={Link} to="/">
                     <img
                         alt=""

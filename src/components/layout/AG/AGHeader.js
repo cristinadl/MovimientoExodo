@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 export default function AGHeader() {
     return (
         <header style={headerStyle}>
-            <Navbar bg="dark" variant="dark">
+            <Navbar bg="dark" variant="dark" expand="lg">
                 <Navbar.Brand as={Link} to="/">
                     <img
                         alt=""

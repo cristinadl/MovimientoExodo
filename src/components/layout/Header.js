@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 export default function Header(props) {
     return (
         <header style = {headerStyle}>
-          <Navbar bg="dark" variant="dark">
+          <Navbar bg="dark" variant="dark" expand="lg">
               <Navbar.Brand as={Link} to="/">
                   <img
                       alt=""
