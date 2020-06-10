@@ -17,7 +17,7 @@ export default class CrearExodo extends React.Component {
       contrasena: '',
       loading: false,
       error: false,
-      passwordEmpty: false
+      empty: false
     }
     this.login = this.login.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -31,10 +31,10 @@ export default class CrearExodo extends React.Component {
 
   login(event) {
       event.preventDefault();
-      if(this.isEmpty(this.state.contrasena)){
-        this.setState({passwordEmpty: true})
+      if(this.isEmpty(this.state.contrasena) || this.isEmpty(this.state.email)){
+        this.setState({error: false, empty: true})
       } else {
-        this.setState({loading: true, error: false})
+        this.setState({loading: true, error: false, empty: false})
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.contrasena).then((Credential) => {
             //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
             var credential = Credential;
@@ -77,7 +77,7 @@ export default class CrearExodo extends React.Component {
               </Button>
               { this.state.loading && <div className='loader center'/>}
               { this.state.error && <Alert variant='danger' className='center'>Los datos son incorrectos</Alert>}
-              { this.state.passwordEmpty && <Alert variant='danger' className='center'>La contraseña no puede estar vacía</Alert>}
+              { this.state.empty && <Alert variant='danger' className='center'>Los campos no pueden estar vacíos</Alert>}
             </Form>
           </Card.Body>
         </Card>
