@@ -22,15 +22,6 @@ var config = {
 
 var secondaryApp = firebase.initializeApp(config, "Secondary");
 
-const isEmail = (email) =>{
-  const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (email.match(regEx)) return true;
-  else return false;
-}
-const isEmpty = (string) =>{
-  if(string.trim() === '') return true;
-  else return false;
-}
 
 export default class CrearExodo extends React.Component {
   constructor(props) {
@@ -42,16 +33,29 @@ export default class CrearExodo extends React.Component {
       contraseña: '',
       tipoExodo: true,
       loading: false,
-      complete: false
+      complete: false,
+      emailRequired: false,
+      emailInvalid: false,
+      passwordRequired: false,
+      handleRequired: false
     }
     this.createExodo = this.createExodo.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleChecked = this.handleChecked.bind(this);
   }
 
+  isEmail(email) {
+    const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return email.match(regEx)
+  }
+
+  isEmpty(string) {
+    return string.trim() === ''
+  }
+
   createExodo(event) {
       event.preventDefault();
-      this.setState({loading: true, complete: false})
+      this.setState({loading: true, complete: false, emailRequired: false, emailInvalid: false, passwordRequired: false, handleRequired: false})
 
       const newUser = {
         email: this.state.email,
@@ -60,19 +64,30 @@ export default class CrearExodo extends React.Component {
         tipoExodo: this.state.tipoExodo
       }
 
-      let errors = {};
+      let errors = false;
 
-      if(isEmpty(newUser.email)){
-          errors.email = 'campo obligatorio'
-      }else if (!isEmail(newUser.email)){
-          errors.email = 'Debe ser un correo válido'
+      if(this.isEmpty(newUser.email)){
+          this.setState({emailRequired: true})
+          errors = true
+      }else if (!this.isEmail(newUser.email)){
+          this.setState({emailInvalid: true})
+          errors = true
       }
 
-      if(isEmpty(newUser.password)) errors.password = 'campo obligatorio'
+      if(this.isEmpty(newUser.password)) {
+        this.setState({passwordRequired: true})
+        errors = true
+      }
       //if(newUser.password != newUser.confirmPassword) errors.password = 'No coincide'
-      if(isEmpty(newUser.handle)) errors.handle = 'campo obligatorio'
+      if(this.isEmpty(newUser.handle)) {
+        this.setState({handleRequired: true})
+        errors = true
+      }
 
-      if(Object.keys(errors).length > 0) return
+      if(errors){
+        this.setState({loading: false, complete: false})
+        return;
+      }
 
       //TODO: Validar data
       //let token, userId, userCredentials;
@@ -212,6 +227,10 @@ export default class CrearExodo extends React.Component {
                     Publicar
                 </Button>
                 { this.state.loading && <div className='loader center'/>}
+                { this.state.emailRequired && <Alert variant='danger' className='center'>Por favor llenar el email</Alert>}
+                { this.state.emailInvalid && <Alert variant='danger' className='center'>Debe ser un correo válido</Alert>}
+                { this.state.passwordRequired && <Alert variant='danger' className='center'>Por favor llenar la contraseña</Alert>}
+                { this.state.handleRequired && <Alert variant='danger' className='center'>Por favor llenar el nombre</Alert>}
                 { this.state.complete && <Alert variant='success' className='center'>El exodo ha sido creado</Alert>}
             </Form>
           </Card.Body>
