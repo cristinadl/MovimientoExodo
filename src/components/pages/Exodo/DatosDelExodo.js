@@ -148,7 +148,7 @@ export default class DatosDelExodo extends React.Component {
               Cantidad de exoditos
             </Form.Label>
             <Col sm="10">
-              <Form.Control name="cantidadExoditos" defaultValue={this.state.cantidadExoditos} onChange={this.handleInput} />
+              <Form.Control type="number" name="cantidadExoditos" defaultValue={this.state.cantidadExoditos} onChange={this.handleInput} />
             </Col>
           </Form.Group>
           <Form.Group as={Row} >
