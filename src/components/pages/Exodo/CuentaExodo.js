@@ -144,15 +144,13 @@ export default class CuentaExodo extends Component {
         this.toBase64((result) => {
             data = result;
             console.log(data);
+            imageJSX = <img src={data} alt = "Profile" height="150" width="150"/>
+            this.render();
         });
- 
-        //firebase.database().ref("Usuarios/" + credential.user.uid).set({nombre: "agre"})
-        console.log("s");
-        console.log(firebase.auth().currentUser.uid);
         
         var uid = firebase.auth().currentUser.uid;
         username = await this.getName(uid);
-        console.log(username);
+
         db.collection("Usuarios").doc(username).update({
             imagenPerfil: data
         })
