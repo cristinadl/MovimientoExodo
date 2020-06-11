@@ -18,14 +18,24 @@ export default class SubirAviso extends React.Component {
       title: '',
       content: '',
       loading: false,
-      complete: false
+      complete: false,
+      empty: false
     }
     this.createPost = this.createPost.bind(this);
     this.handleInput = this.handleInput.bind(this);
   }
 
+  isEmpty(string) {
+    return string.trim() === ''
+  }
+
   createPost(event) {
       event.preventDefault();
+      this.setState({empty: false})
+      if(this.isEmpty(this.state.title) || this.isEmpty(this.state.content)){
+        this.setState({empty: true})
+        return
+      }
       this.setState({loading: true, complete: false})
       const now = new Date()
       const secondsSinceEpoch = Math.round(now.getTime() / 1000)
@@ -80,6 +90,7 @@ export default class SubirAviso extends React.Component {
                     Publicar
                 </Button>
                 { this.state.loading && <div className='loader center'/>}
+                { this.state.empty && <Alert variant='danger' className='center'>Por favor llenar todos los campos</Alert>}
                 { this.state.complete && <Alert variant='success' className='center'>El anuncio ha sido publicado</Alert>}
             </Form>
           </Card.Body>
