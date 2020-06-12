@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
  
 var db;
-var credential;
  
 export class AccountContent extends Component {
   constructor(props) {
@@ -90,7 +89,7 @@ export class AccountContent extends Component {
     {
         event.preventDefault();
         console.log(this.state.newPassword)
-        credential.user.updatePassword(this.state.newPassword).then(function() {
+        firebase.auth().currentUser.updatePassword(this.state.newPassword).then(function() {
             console.log("new");
             this.setState({newPassword: ""});
           }).catch(function(error) {

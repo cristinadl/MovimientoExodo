@@ -8,7 +8,6 @@ import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
  
 var db;
-//var credential;
 var imageJSX = <img src="/Person-02.png" alt="Person-02" height="150" width="150"></img>;
 var username = "";
  
@@ -65,17 +64,6 @@ export default class CuentaExodo extends Component {
 
         this.getProfilePicture(firebase.auth().currentUser.uid);
     }
- 
-    // signIn(email, password)  {
-    //     firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
-    //         //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
-    //         console.log(Credential);
-    //         credential = Credential;
-    //         this.getProfilePicture(credential.user.uid)
-    //     }).catch((error) => {
-    //         console.log(error.message);
-    //     })
-    // }
  
     getProfilePicture(id)
     {
@@ -143,16 +131,15 @@ export default class CuentaExodo extends Component {
  
         this.toBase64((result) => {
             data = result;
-            console.log(data);
+            // Se modifica el pedazo de JSX que va a ser usado para desplegar la imagen.
+            imageJSX = <img src={data} alt = "Profile" height="150" width="150"/>
+            // Se vuelve a renderizar la página para mostrar el cambio.
+            this.render();
         });
- 
-        //firebase.database().ref("Usuarios/" + credential.user.uid).set({nombre: "agre"})
-        console.log("s");
-        console.log(firebase.auth().currentUser.uid);
         
         var uid = firebase.auth().currentUser.uid;
         username = await this.getName(uid);
-        console.log(username);
+
         db.collection("Usuarios").doc(username).update({
             imagenPerfil: data
         })
@@ -166,8 +153,6 @@ export default class CuentaExodo extends Component {
  
     toBase64(cb) {
         let reader = new FileReader();
-        console.log("64")
-        console.log(this.state.loadedFile)
         reader.readAsDataURL(this.state.loadedFile);
         reader.onload = function () {
             cb(reader.result)
