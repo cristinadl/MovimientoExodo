@@ -206,8 +206,8 @@ export default class DatosDelExodo extends React.Component {
             <Col sm="10">
               <input type="file" className="form-control" accept = ".png, .jpg" multiple={true} onChange = {this.verifyPhotos}></input>
               <input type="file" className="form-control" accept = ".png, .jpg" multiple={true} onChange = {this.verifyPhotos}></input>
-              <input type="file" className="form-control" accept = ".png, .jpg" multiple={true} onChange = {this.verifyPhotos}></input>
-              <input type="file" className="form-control" accept = ".png, .jpg" multiple={true} onChange = {this.verifyPhotos}></input>
+              {/* <input type="file" className="form-control" accept = ".png, .jpg" multiple={true} onChange = {this.verifyPhotos}></input>
+              <input type="file" className="form-control" accept = ".png, .jpg" multiple={true} onChange = {this.verifyPhotos}></input> */}
             </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
