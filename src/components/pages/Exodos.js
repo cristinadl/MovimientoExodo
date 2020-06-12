@@ -39,7 +39,8 @@ function ExodoData(props) {
         <Jumbotron style={jumbotronStyle}>
           <br></br>
           <h1 style={textColor}>{exodo.nombreCompleto}</h1>
-          <p>{exodo.lema}</p>
+          <p><strong>{exodo.lema}</strong></p>
+          <p>{exodo.pais} , {exodo.estado}</p>
         </Jumbotron>
         <Jumbotron style={jumbotronStyle2}>
           <Container>
@@ -53,6 +54,7 @@ function ExodoData(props) {
                 <p style={textColor} className="display-linebreak">{exodo.porra}</p>
                 <h4>NUESTRO LEMA</h4>
                 <p style={textColor} className="display-linebreak">{exodo.lema}</p>
+                <p><br></br><div style={textSize1}>{exodo.cantidadExoditos}</div><div style={textColor}>NÚMERO DE EXODITOS</div></p>
               </Col>
             </Row>
             <hr></hr>
@@ -156,12 +158,15 @@ export default class Exodos extends Component {
           }
           exodos.push({
             id: exodo.ref.id,
+            pais: exodo.data().pais,
+            estado: exodo.data().Estado,
             nombre: exodo.data().nombre,
             nombreCompleto: nombre,
             internacional: exodo.data().Internacional,
             porra: exodo.data().porra,
             historia: exodo.data().historia,
             sabiasQue: exodo.data().sabiasQue,
+            cantidadExoditos: exodo.data().cantidadExoditos,
             lema : exodo.data().lema,
             foto : image,
             logo: logo
@@ -225,4 +230,8 @@ const jumbotronStyle = {
   background: 'url(http://movimientoexodo.com/wp-content/uploads/2015/01/dd23aaa.jpg) no-repeat 20% 25%',
   backgroundSize: "cover",
   textAlign: 'right',
+}
+
+const textSize1 = {
+  fontSize: "3rem"
 }
