@@ -33,9 +33,7 @@ export default class CuentaExodo extends Component {
  
             <div>
                 <Col md={2}>
-                <Card>
                     { imageJSX }
-                </Card>
                 </Col>
                 
                 <Col md={6}>
