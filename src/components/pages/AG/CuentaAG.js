@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AccountContent from './../../AccountContent'
 import * as firebase from 'firebase'
+import 'firebase/auth';
 
 var db;
 

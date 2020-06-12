@@ -4,75 +4,47 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import Alert from 'react-bootstrap/Alert'
 import * as firebase from 'firebase'
+import './pages/loader.css';
+import 'firebase/auth';
  
 var db;
  
-export class AccountContent extends Component {
+export default class AccountContent extends Component {
   constructor(props) {
     super(props);
+    this.db = firebase.firestore();
     this.state = {
-        username: "Foo",
-        newPassword: ""
+        username: props.nombre,
+        email: props.email,
+        newPassword: "",
+        oldPassword: "",
+        loading: false,
+        complete: false,
+        error: false
     }
     this.handleInput = this.handleInput.bind(this);
     this.changePassword = this.changePassword.bind(this);
   }
  
- 
-    render(){
-        return (
-            // <div>
-            //     <p>Usuario: {this.state.username}</p>
-            //     # form
-            //     <p>Contraseña: <button>Cambiar Contraseña</button></p>
-            //     <p>Sign In: <button onClick={() => this.signIn('email@email.com', 'password')}>Sign In</button></p>
-            // </div>
-            <Card>
-            <Card.Body>
-                    {/* <Card.Text column sm = "10" style={{textAlign: 'left'}}>
-                        <p>Usuario: {this.state.username}</p>
-                    </Card.Text> */}
-                <Form onSubmit={this.changePassword}>
-                    <Form.Group as={Row}>
-                        <Form.Label column sm="2">
-                            Usuario: {this.state.username}
-                        </Form.Label>
-                    </Form.Group>
-                    <Form.Group as={Row}>
-                        <Form.Label column sm="2">
-                            Contraseña:
-                        </Form.Label>
-                        <Col sm="10">
-                            <Form.Control name="newPassword" type="password" onChange={this.handleInput}/>
-                        </Col>
-                    </Form.Group>
-                    <Button variant="dark" type="submit" on>
-                        Cambiar Contraseña
-                    </Button>
-                </Form>
-            </Card.Body>
-            </Card>
-        )
-    }
- 
     componentDidMount()
-    {
-        db = firebase.firestore();
- 
-        this.render();
-    //     var username;
-    //     console.log("w");
- 
-    //     db.collection('Usuarios').where("userId", "==", "bjGPO1x4ILUL3H3Zsmwo235RWh53")
-    //   .get() // Metodo de Firebase para obtener los datos
-    //   .then((Snap) => {
-    //     Snap.forEach(function(user) {
-    //         username = user.data().nombre
-    //         console.log(user.data().nombre);
-    //       });
-    //       this.setState({username: username})
-    //     });
+    { 
+        this.db.collection('Usuarios')
+        .where("userId", "==", firebase.auth().currentUser.uid)
+        .get()
+        .then(result => {
+            result.forEach(doc => {
+                this.setState({
+                id: doc.id,
+                email: doc.data().email,
+                username: doc.data().nombre,
+                loading: false,
+                complete: false,
+                error: false
+                })
+            })
+        })
  
     }
  
@@ -88,42 +60,47 @@ export class AccountContent extends Component {
     changePassword(event)
     {
         event.preventDefault();
+        this.setState({loading: true, complete: false})
         console.log(this.state.newPassword)
-        firebase.auth().currentUser.updatePassword(this.state.newPassword).then(function() {
-            console.log("new");
-            this.setState({newPassword: ""});
-          }).catch(function(error) {
-            console.log(error);
-          });
+        var user = firebase.auth().currentUser;
+        user.updatePassword(this.state.newPassword).then(()=> {
+            this.setState({loading: false, complete: true})
+        }).catch((error) => {
+            this.setState({loading: false, error: true})
+        });
         event.preventDefault();
+
     }
  
-    // signIn(email, password)  {
-    //     firebase.auth().signInWithEmailAndPassword(email, password).then((Credential) => {
-    //         //El objeto de Credential en Credential.user tiene el usario qe necesitas para el change password
-    //         console.log(Credential);
-    //         credential = Credential;
-    //         this.getUsername(credential.user.uid)
-    //     }).catch((error) => {
-    //         console.log(error.message);
-    //     })
-    // }
- 
-    getUsername(id)
-    {
-        var username;
-        console.log(id);
- 
-        db.collection('Usuarios').where("userId", "==", id)
-      .get() // Metodo de Firebase para obtener los datos
-      .then((Snap) => {
-        Snap.forEach(function(user) {
-            username = user.data().nombre
-            console.log(user.data().nombre);
-          });
-          this.setState({username: username})
-        });
+
+    render(){
+        return (
+            <Card>
+            <Card.Body>
+                <Form onSubmit={this.changePassword}>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm="2">
+                            Usuario: {this.state.username}
+                        </Form.Label>
+                    </Form.Group>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm="2">
+                            Contraseña Nueva:
+                        </Form.Label>
+                        <Col sm="10">
+                            <Form.Control name="newPassword" value={this.state.newPassword} type="password" onChange={this.handleInput}/>
+                        </Col>
+                    </Form.Group>
+                    <Button variant="dark" type="submit" on>
+                        Cambiar Contraseña
+                    </Button>
+                    { this.state.loading && <div className='loader center'/>}
+                    { this.state.complete && <Alert variant='success' className='center'>Se ha cambiado la contraseña.</Alert>}
+                    { this.state.error && <Alert variant='danger' className='center'>Error al intentar cambiar contraseña, comuníquese con el administrador.</Alert>}
+                </Form>
+            </Card.Body>
+            </Card>
+        )
     }
 }
  
-export default AccountContent

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
+import Carousel from 'react-bootstrap/Carousel'
 import { Container, Row, Col } from 'reactstrap'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Image from 'react-bootstrap/Image'
@@ -8,10 +9,12 @@ import './loader.css';
 import Button from 'react-bootstrap/Button'
 
 import * as firebase from 'firebase'
+import 'firebase/auth';
 import Figure from 'react-bootstrap/Figure';
 
 var db;
 
+var image;
 
 function Exodo(props) {
   const exodo = props.exodo
@@ -36,7 +39,8 @@ function ExodoData(props) {
         <Jumbotron style={jumbotronStyle}>
           <br></br>
           <h1 style={textColor}>{exodo.nombreCompleto}</h1>
-          <p>{exodo.lema}</p>
+          <p><strong>{exodo.lema}</strong></p>
+          <p>{exodo.pais} , {exodo.estado}</p>
         </Jumbotron>
         <Jumbotron style={jumbotronStyle2}>
           <Container>
@@ -50,6 +54,7 @@ function ExodoData(props) {
                 <p style={textColor} className="display-linebreak">{exodo.porra}</p>
                 <h4>NUESTRO LEMA</h4>
                 <p style={textColor} className="display-linebreak">{exodo.lema}</p>
+                <p><br></br><div style={textSize1}>{exodo.cantidadExoditos}</div><div style={textColor}>NÚMERO DE EXODITOS</div></p>
               </Col>
             </Row>
             <hr></hr>
@@ -75,6 +80,36 @@ function ExodoData(props) {
             <Row className="justify-content-md-center">
               <h4 >TRIBUS QUE NOS CONFORMAN</h4>
             </Row>
+            <Carousel>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={exodo.foto[0]}
+                    alt="First slide"
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={exodo.foto[1]}
+                    alt="Second slide"
+                  />
+                </Carousel.Item>
+                {/* <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={exodo.foto[2]}
+                    alt="Third slide"
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={exodo.foto[3]}
+                    alt="Fourth slide"
+                  />
+                </Carousel.Item> */}
+              </Carousel>
             <Button variant="secondary" onClick={props.resetExodo}>Regresar a todos los Éxodos</Button>
           </Container>
         </Jumbotron>
@@ -110,15 +145,30 @@ export default class Exodos extends Component {
         Snap.forEach(function (exodo) {
           exodo.data().logo !== ' ' ? logo = exodo.data().logo : logo = logoDefault
           exodo.data().nombreDeGrupo !== ' ' ? nombre = exodo.data().nombreDeGrupo : nombre = exodo.data().nombre
+          if(exodo.data().fotos.length < 1 | exodo.data().fotos === undefined ){
+            image = ['', '', '', ''];
+          }else if(exodo.data().fotos.length < 2){
+            image = [exodo.data().fotos[0], exodo.data().fotos[0], exodo.data().fotos[0], exodo.data().fotos[0]];
+          }else if(exodo.data().fotos.length < 3){
+            image = [exodo.data().fotos[0], exodo.data().fotos[1], exodo.data().fotos[0], exodo.data().fotos[0]];
+          }else if(exodo.data().fotos.length < 4){
+            image = [exodo.data().fotos[0], exodo.data().fotos[1], exodo.data().fotos[2], exodo.data().fotos[0]];
+          }else{
+            image = [exodo.data().fotos[0], exodo.data().fotos[1], exodo.data().fotos[2], exodo.data().fotos[3]];
+          }
           exodos.push({
             id: exodo.ref.id,
+            pais: exodo.data().pais,
+            estado: exodo.data().Estado,
             nombre: exodo.data().nombre,
             nombreCompleto: nombre,
             internacional: exodo.data().Internacional,
             porra: exodo.data().porra,
             historia: exodo.data().historia,
             sabiasQue: exodo.data().sabiasQue,
+            cantidadExoditos: exodo.data().cantidadExoditos,
             lema : exodo.data().lema,
+            foto : image,
             logo: logo
           });
         });
@@ -180,4 +230,8 @@ const jumbotronStyle = {
   background: 'url(http://movimientoexodo.com/wp-content/uploads/2015/01/dd23aaa.jpg) no-repeat 20% 25%',
   backgroundSize: "cover",
   textAlign: 'right',
+}
+
+const textSize1 = {
+  fontSize: "3rem"
 }

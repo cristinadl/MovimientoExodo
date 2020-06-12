@@ -5,6 +5,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 import Image from 'react-bootstrap/Image'
 import Figure from 'react-bootstrap/Figure'
 import * as firebase from 'firebase'
+import 'firebase/auth';
 
 var db;
 

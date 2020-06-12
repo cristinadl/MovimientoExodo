@@ -24,6 +24,7 @@ import CuentaExodo from './components/pages/Exodo/CuentaExodo'
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as firebase from 'firebase'
+import 'firebase/auth';
 
 const accountType =
 {
