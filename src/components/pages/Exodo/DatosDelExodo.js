@@ -12,6 +12,9 @@ import 'firebase/auth';
 
 //var skip = true;
 
+var imageJSX = <img src="/Person-02.png" alt="Person-02" height="150" width="150"></img>;
+
+
 export default class DatosDelExodo extends React.Component {
   constructor(props) {
     super(props);
@@ -53,7 +56,8 @@ export default class DatosDelExodo extends React.Component {
     .get()
     .then(result => {
       result.forEach(doc => {
-        doc.data().logo !== ' ' ? logo = doc.data().logo : logo = logoDefault
+        doc.data().logo !== ' ' ? logo = doc.data().logo : logo = logoDefault                
+        imageJSX = <img src={logo} alt = "Profile" height="150" width="150"/>
         this.setState({
           id: doc.id,
           email: doc.data().email,
@@ -135,6 +139,7 @@ export default class DatosDelExodo extends React.Component {
               Logo
             </Form.Label>
             <Col sm="10">
+            { imageJSX }
               <input type="file" className="form-control" accept = ".png, .jpg" multiple="" onChange = {this.verifyLogo}></input>
             </Col>
           </Form.Group>
@@ -253,6 +258,7 @@ export default class DatosDelExodo extends React.Component {
 
         this.getBase64(file, (result) => {
           this.setState({logo: result});
+          imageJSX = <img src={result} alt = "Profile" height="150" width="150"/>
      });
   }
 
