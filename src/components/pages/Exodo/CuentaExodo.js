@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
+import 'firebase/auth';
  
 var db;
 var imageJSX = <img src="/Person-02.png" alt="Person-02" height="150" width="150"></img>;

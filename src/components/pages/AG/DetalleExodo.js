@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import * as firebase from 'firebase'
+import 'firebase/auth';
 
 var db;
 
@@ -66,19 +67,18 @@ export default class DetalleExodo extends Component {
       event.preventDefault();
       this.setState({uploading: true, complete: false})
       var data;
-      if(this.state.contrasena.length > 6){
+      // if(this.state.contrasena.length > 6){
+      //   data = {
+      //       nombre: this.state.nombre,
+      //       email: this.state.email,
+      //       // contrasena: this.state.contrasena, TODO: postear contraseña
+      //       tipoExodo: this.state.tipoExodo
+      //   }
+      // } else {
         data = {
             nombre: this.state.nombre,
-            email: this.state.email,
-            // contrasena: this.state.contrasena, TODO: postear contraseña
+            //email: this.state.email,
             tipoExodo: this.state.tipoExodo
-        }
-      } else {
-        data = {
-            nombre: this.state.nombre,
-            email: this.state.email,
-            tipoExodo: this.state.tipoExodo
-        }
       }
       db.collection('Usuarios').doc(this.state.id).update(data).then(() => {
           console.log('Success'); // Cambiar por feedback al usuario
@@ -101,7 +101,7 @@ export default class DetalleExodo extends Component {
         initial_name: result.data().nombre,
         email: result.data().email,
         nombre: result.data().nombre,
-        contraseña: result.data().contraseña,
+        //contraseña: result.data().contraseña,
         tipoExodo: result.data().tipoExodo,
         loading: false
         });

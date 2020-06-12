@@ -8,6 +8,7 @@ import Alert from 'react-bootstrap/Alert'
 import { Container } from 'reactstrap'
 import * as firebase from 'firebase'
 import '../loader.css';
+import 'firebase/auth';
 
 
 export default class SubirAviso extends React.Component {

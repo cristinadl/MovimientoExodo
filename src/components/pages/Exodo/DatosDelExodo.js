@@ -8,6 +8,7 @@ import Alert from 'react-bootstrap/Alert'
 import { Container } from 'reactstrap'
 import '../loader.css';
 import * as firebase from 'firebase'
+import 'firebase/auth';
 
 //var skip = true;
 
